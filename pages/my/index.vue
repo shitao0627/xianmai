@@ -116,8 +116,12 @@
 				uni.navigateTo({
 					url:"../set_up/set_up"
 				})
-			},
-			
+			}
+			set(){
+				uni.navigateTo({
+					url:"../set_up/set_up"
+				})
+			}
 		}
 	}
 </script>
