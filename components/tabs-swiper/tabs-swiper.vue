@@ -4,8 +4,8 @@
 			:scroll-left="scrollToLeft" scroll-x @scroll="handleScroll">
 			<view class="nav uni-nav">
 				<view class="nav-item" :class="swiperIndex == index ? 'nav-item-act' : ''" :key="index"
-					v-for="(item, index) in subCategoryName" @click="taggleNav(index)">
-					{{ item.subCategoryName }}
+					v-for="(item, index) in list" @click="taggleNav(index)">
+					{{ item.title }}
 				</view>
 				<view class="nav-line" :style="style">
 					<view class="nav-lines"></view>
@@ -57,12 +57,6 @@
 				],
 				refreStatus: false
 			};
-		},
-		props:{
-			subCategoryName: {
-				type: Array,
-				default: []
-			},
 		},
 		computed: {
 			style() {
