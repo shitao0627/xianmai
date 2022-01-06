@@ -7,12 +7,12 @@
 			<view class="speity_header_point"></view>
 			<view class="speity_header_line"></view>
 		</view> -->
-		<view class="speity_card" v-for="item in card" @tap="gotodetails">
+		<view class="speity_card" v-for="item in list"  @tap="gotodetails(item)">
 			<!-- 商品图片 -->
 			<view class="speity_img">
-				<image :src="item.src"></image>
+				<image :src="item.goods_image"></image>
 			</view>
-			<view class="speity_title">{{item.title}}</view>
+			<view class="speity_title">{{item.goods_name}}</view>
 			<view class="speity_details">
 				<text class="speity_price">&yen;{{item.price}}</text>
 				<view class="speity_details_model">
@@ -20,11 +20,11 @@
 						<text class="speity_share_name">分享</text>
 						<text class="speity_share_details">赚钱30%</text>
 					</view>
-					<view class="speity_mail">{{item.label}}</view>
+					<view class="speity_mail">{{item.addresss}}</view>
 				</view>
 			</view>
 			<view class="speity_bottom">
-				<view class="speity_people">{{item.people}}人购买</view>
+				<view class="speity_people">{{item.sales_volume}}人购买</view>
 				<view class="icon iconfont icon-31gouwuche speity_shopping"></view>
 			</view>
 		</view>
@@ -36,90 +36,25 @@
 		name:"speityn",
 		data() {
 			return {
-				card:[{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				}]
+				
 			};
 		},
+		props:{
+			list: {
+				type: Array,
+				default: []
+			},
+			recommendList: {
+				type: Array,
+				default: () => []
+			},
+		},
 		methods:{
-			gotodetails(){
-			        uni.navigateTo({
-			            // url: 'test?id=1&name=uniapp'  c传递参数
-			
-			            url:"/pages/goods_details/goods_details?"
-			
-			        })
-			    }
+			gotodetails(item){
+				uni.navigateTo({
+					url:"/pages/goods_details/goods_details?goods_id="+item.goods_id+'&img='+item.goods_image+'&name='+item.goods_name+'&address='+item.addresss+'&persionNum='+item.sales_volume
+				})
+			},
 		}
 	}
 </script>

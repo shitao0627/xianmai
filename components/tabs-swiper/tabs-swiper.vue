@@ -4,7 +4,7 @@
 			:scroll-left="scrollToLeft" scroll-x @scroll="handleScroll">
 			<view class="nav uni-nav">
 				<view class="nav-item" :class="swiperIndex == index ? 'nav-item-act' : ''" :key="index"
-					v-for="(item, index) in subCategoryName" @click="taggleNav(index)">
+					v-for="(item, index) in subType" @click="taggleNav(index)">
 					{{ item.subCategoryName }}
 				</view>
 				<view class="nav-line" :style="style">
@@ -20,11 +20,12 @@
 					 <!-- :refresher-enabled="true" -->
 					<scroll-view :lower-threshold="80" :refresher-triggered="refreStatus"
 						@refresherrefresh="handleRefre" class="swiper-scroll" scroll-y="true"
-						@scrolltolower="swiperScrollLower">
+						>
+						<!-- @scrolltolower="swiperScrollLower" -->
 						<view>
 							<!-- <view class="swiper-item-list" v-for="sub_item in item.content" :key="sub_item">
 								{{ sub_item }}</view> -->
-							<speityn></speityn>
+							<speityn :list="list" :recommendList='recommendList'></speityn>
 						</view>
 					</scroll-view>
 				</swiper-item>
@@ -44,24 +45,36 @@
 				navInfos: [], //所有navitem的节点信息
 				parentLeft: 0, //nav盒子的节点信息
 				componentWidth: 0, //nav盒子的宽度
-				list: [
-					{ title: '足浴耗足浴耗', content: ['首页-1', '首页-2', '首页-3', '首页-4'] },
-					{ title: '足浴耗', content: ['测试-1', '测试-2', '测试-3', '测试-4', '测试-5'] },
-					{ title: '足浴耗品3', content: [] },
-					{ title: '足浴耗品4', content: ['hello-1', 'hello-2', 'hello-3', 'hello-4', 'hello-5'] },
-					{ title: '足浴耗品5', content: ['测试-1-1', '测试-1-2', '测试-1-3', '测试-1-4', '测试-1-5'] },
-					{ title: '足浴耗品6', content: ['测试-2-1', '测试-2-2', '测试-2-3', '测试-2-4', '测试-2-5'] },
-					{ title: '足浴耗品7', content: ['测试-3-1', '测试-3-2', '测试-3-3', '测试-3-4', '测试-3-5'] },
-					{ title: '足浴耗品8', content: ['测试-4-1', '测试-4-2', '测试-4-3', '测试-4-4', '测试-4-5'] },
-					{ title: '足浴耗品9', content: ['测试-5-1', '测试-5-2', '测试-5-3', '测试-5-4', '测试-5-5'] }
-				],
+				// list: [
+				// 	{ title: '足浴耗足浴耗', content: ['首页-1', '首页-2', '首页-3', '首页-4'] },
+				// 	{ title: '足浴耗', content: ['测试-1', '测试-2', '测试-3', '测试-4', '测试-5'] },
+				// 	{ title: '足浴耗品3', content: [] },
+				// 	{ title: '足浴耗品4', content: ['hello-1', 'hello-2', 'hello-3', 'hello-4', 'hello-5'] },
+				// 	{ title: '足浴耗品5', content: ['测试-1-1', '测试-1-2', '测试-1-3', '测试-1-4', '测试-1-5'] },
+				// 	{ title: '足浴耗品6', content: ['测试-2-1', '测试-2-2', '测试-2-3', '测试-2-4', '测试-2-5'] },
+				// 	{ title: '足浴耗品7', content: ['测试-3-1', '测试-3-2', '测试-3-3', '测试-3-4', '测试-3-5'] },
+				// 	{ title: '足浴耗品8', content: ['测试-4-1', '测试-4-2', '测试-4-3', '测试-4-4', '测试-4-5'] },
+				// 	{ title: '足浴耗品9', content: ['测试-5-1', '测试-5-2', '测试-5-3', '测试-5-4', '测试-5-5'] }
+				// ],
 				refreStatus: false
 			};
 		},
 		props:{
-			subCategoryName: {
+			subType: {
 				type: Array,
 				default: []
+			},
+			list: {
+				type: Array,
+				default: []
+			},
+			subCategoryId:{
+				type: String,
+				default: ''
+			},
+			recommendList: {
+				type: Array,
+				default: () => []
 			},
 		},
 		computed: {
@@ -113,20 +126,20 @@
 				this.scrollDom();
 				this.$emit('currentIndex', this.swiperIndex);
 			},
-			// tabs-scrollview触底
-			handleScroll(e) {
-				this.scrollDom();
-			},
-			// swiper-ScrollLower触底
-			swiperScrollLower() {
-				uni.showToast({
-					icon: 'none',
-					title: `此时为${this.list[this.swiperIndex].title}触底`
-				});
-				setTimeout(() => {
-					this.getData();
-				}, 500);
-			},
+			// // tabs-scrollview触底
+			// handleScroll(e) {
+			// 	this.scrollDom();
+			// },
+			// // swiper-ScrollLower触底
+			// swiperScrollLower() {
+			// 	uni.showToast({
+			// 		icon: 'none',
+			// 		title: `此时为${this.list[this.swiperIndex].title}触底`
+			// 	});
+			// 	setTimeout(() => {
+			// 		this.getData();
+			// 	}, 500);
+			// },
 			// 生成列表数据
 			getData() {
 				uni.showLoading({
@@ -142,23 +155,7 @@
 				}, 1000);
 				console.log(this.list[this.swiperIndex]);
 			},
-			// 下拉事件
-			handleRefre() {
-				this.refreStatus = true;
-				uni.showLoading({
-					title: '下拉加载中'
-				});
-				setTimeout(() => {
-					this.list[this.swiperIndex].content = [];
-					for (var i = 0; i < 5; i++) {
-						this.list[this.swiperIndex].content.push([this.list[this.swiperIndex].title + '下拉-' + i]);
-					}
-					uni.hideLoading();
-				}, 1000);
-				setTimeout(() => {
-					this.refreStatus = false;
-				}, 1000);
-			}
+			
 		}
 	};
 </script>

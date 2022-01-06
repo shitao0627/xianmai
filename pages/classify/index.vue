@@ -134,7 +134,7 @@
 				console.log(item)
 				console.log(cItem)
 				uni.navigateTo({
-					url: '/pages/goods_list/goods_list?title='+item.categoryName+'&item='+JSON.stringify(item.children)+'&electId='+cIndex+'&type=subClassify',
+					url: '/pages/goods_list/goods_list?title='+item.categoryName+'&item='+JSON.stringify(item.children)+'&selectId='+cIndex+'&type=subClassify',
 				
 				})
 			},
@@ -211,7 +211,7 @@
 	* {
 		box-sizing: border-box;
 	}
-
+	.uni-scroll-view::-webkit-scrollbar {display: none }
 	// 顶部搜索框
 	.classify_top {
 		display: flex;

@@ -126,7 +126,14 @@ export const appraiseList = (data) => {
         data,
     })
 }
-
+// 	24小时到
+export const hoursTo = (data) => {
+    return http.request({
+        url: '/HomePage/Get24HoursTo',
+        method: 'GET', 
+        data,
+    })
+}
 // 默认全部导出  import api from '@/common/vmeitime-http/'
 export default {
 	test,
@@ -140,6 +147,7 @@ export default {
 	specification,
 	productParameter,
 	appraiseNum,
-	appraiseList
+	appraiseList,
+	hoursTo
 	
 }

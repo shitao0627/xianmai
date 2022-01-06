@@ -19,6 +19,10 @@ export default [{
 			{
 				img: '../../static/img/goods2.png',
 				name: '按摩床单'
+			},
+			{
+				img: '../../static/img/goods2.png',
+				name: '按摩床单'
 			}
 		]
 	},
@@ -27,6 +31,22 @@ export default [{
 		subArr: [{
 				img: '../../static/img/goods2.png',
 				name: '洗护用品'
+			},
+			{
+				img: '../../static/img/goods2.png',
+				name: '工具品'
+			},
+			{
+				img: '../../static/img/goods2.png',
+				name: '工具品'
+			},
+			{
+				img: '../../static/img/goods2.png',
+				name: '工具品'
+			},
+			{
+				img: '../../static/img/goods2.png',
+				name: '工具品'
 			},
 			{
 				img: '../../static/img/goods2.png',
@@ -43,52 +63,16 @@ export default [{
 			{
 				img: '../../static/img/goods2.png',
 				name: '袋装泡脚粉'
+			},
+			{
+				img: '../../static/img/goods2.png',
+				name: '袋装泡脚粉'
 			}
 		]
 	},
 	{
 		name: '水果1',
 		subArr: [{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
 				img: '../../static/img/goods2.png',
 				name: '水果2'
 			},
@@ -111,12 +95,20 @@ export default [{
 			{
 				img: '../../static/img/goods2.png',
 				name: '悲剧2'
+			},
+			{
+				img: '../../static/img/goods2.png',
+				name: '悲剧2'
 			}
 		]
 	},
 	{
 		name: '分类2',
 		subArr: [{
+				img: '../../static/img/goods2.png',
+				name: '红茶'
+			},
+			{
 				img: '../../static/img/goods2.png',
 				name: '红茶'
 			},
@@ -163,40 +155,16 @@ export default [{
 			{
 				img: '../../static/img/goods2.png',
 				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '水果2'
 			}
 		]
 	},
 	{
 		name: '分类15',
 		subArr: [{
+				img: '../../static/img/goods2.png',
+				name: '悲剧2'
+			},
+			{
 				img: '../../static/img/goods2.png',
 				name: '悲剧2'
 			},
@@ -227,12 +195,20 @@ export default [{
 			{
 				img: '../../static/img/goods2.png',
 				name: '红茶'
+			},
+			{
+				img: '../../static/img/goods2.png',
+				name: '红茶'
 			}
 		]
 	},
 	{
 		name: '茶叶7',
 		subArr: [{
+				img: '../../static/img/goods2.png',
+				name: '红茶'
+			},
+			{
 				img: '../../static/img/goods2.png',
 				name: '红茶'
 			},
@@ -256,61 +232,6 @@ export default [{
 	},{
 		name: '茶叶7',
 		subArr: [{
-				img: '../../static/img/goods2.png',
-				name: '红茶'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '红茶'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '红茶'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '红茶'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '红茶'
-			}
-		]
-	},{
-		name: '茶叶7',
-		subArr: [{
-				img: '../../static/img/goods2.png',
-				name: '红茶'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '红茶'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '红茶'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '红茶'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '红茶'
-			}
-		]
-	},
-	{
-		name: '茶叶6',
-		subArr: [{
-				img: '../../static/img/goods2.png',
-				name: '红茶'
-			},
-			{
-				img: '../../static/img/goods2.png',
-				name: '红茶'
-			},
-			{
 				img: '../../static/img/goods2.png',
 				name: '红茶'
 			},
