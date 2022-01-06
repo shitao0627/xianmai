@@ -121,11 +121,11 @@
 					<view class="specification_information">
 						<view class="specification_information_left">
 							<view class="specification_information_img">
-								<image :src="goodsData.img"></image>
+								<image :src="checkedItem.images"></image>
 							</view>
 							<view class="price_inventory">
-								<view class="price">&yen;{{goodsData.price}}</view>
-								<view class="inventory">库存{{goodsData.inventory}}件</view>
+								<view class="price">&yen;{{checkedItem.price}}</view>
+								<view class="inventory">库存{{checkedItem.stock}}件</view>
 							</view>
 						</view>
 						<view class="specification_information_right">
@@ -134,12 +134,12 @@
 					</view>
 					<view class="specification_information_title">选择规格：</view>
 					<view class="sp">
-						<view v-for="(item,index) in goodsData.spec" :class="[index==selectSpec?'on':'']"
-							@tap="setSelectSpec(index)" :key="index">{{item}}</view>
+						<view v-for="(item,index) in checkedItem" :class="[index==selectSpec?'on':'']"
+							@tap="setSelectSpec(index)" :key="index">{{item.specification}}</view>
 					</view>
 					<view class="length">
 						<view class="text">购买数量</view>
-						<view class="price">&yen;{{goodsData.price*goodsData.number}}</view>
+						<view class="price">&yen;{{checkedItem.price*goodsData.number}}</view>
 						<view class="number">
 							<view class="sub" @tap.stop="sub">
 								<view class="">-</view>
@@ -157,7 +157,7 @@
 				<view class="layer_buttom">
 					<view class="shujia">
 						<view class="shujia_left" style="display: flex;">已选<input type="number" style="width: 60rpx;text-align: center;" v-model="goodsData.number" />个</view>
-						<view class="shujia_right">商品金额 <text style="color: #EA473F;"> &yen;{{goodsData.price*goodsData.number}}</text></view>
+						<view class="shujia_right">商品金额 <text style="color: #EA473F;"> &yen;{{checkedItem.price*goodsData.number}}</text></view>
 					</view>
 					<view class="button_btn">
 						<view class="button_btn_right" @tap="joinCart">加入购物车</view>
@@ -170,22 +170,22 @@
 		<!-- 商品主图轮播 -->
 		<view class="swiper-box">
 			<swiper circular="true" autoplay="true" @change="swiperChange">
-				<swiper-item v-for="swiper in swiperList" :key="swiper.id">
-					<image :src="swiper.img"></image>
+				<swiper-item v-for="swiper in goodsdetails.img_list" :key="swiper.id">
+					<image :src="swiper.goods_image"></image>
 				</swiper-item>
 			</swiper>
-			<view class="indicator">{{currentSwiper+1}}/{{swiperList.length}}</view>
+			<!-- <view class="indicator">{{currentSwiper+1}}/{{goodsdetails.img_list.length}}</view> -->
 		</view>
 		<!-- 标题 价格 -->
 		<view class="info-box goods-info">
 			<view class="title">
-				{{goodsData.name}}
+				{{goodsdetails.goods_name}}
 			</view>
-			<view class="price">￥{{goodsData.price}}</view>
+			<view class="price">￥{{goodsdetails.price}}</view>
 			<view class="goods-info-card">
 				<view class="">快递:免运费</view>
-				<view class="">月销{{goodsData.inventory}}笔</view>
-				<view class="">江苏苏州</view>
+				<view class="">月销{{goodsdetails.sales_volume}}笔</view>
+				<view class="">{{goodsdetails.addresss}}</view>
 			</view>
 		</view>
 		<!-- 优惠券-规则选择 -->
@@ -193,9 +193,9 @@
 			<view class="row" style="display: flex;align-items: center;justify-content: space-between;">
 				<view class="coupons_row">
 					<view class="text"style="flex: none;">优惠券</view>
-					<view class="coupons_img">
-						<text>满5000减500</text>
-					</view>
+						<view class="coupons_img" v-for="(item, index) in goodsdetails.coupons_list" :key="index">
+							<text>满{{item.available}}减{{item.face_value}}</text>
+						</view>
 				</view>
 				
 				<view class="coupons">
@@ -236,6 +236,7 @@
 			<view class="row" style="margin: 0;border: none;">
 				<view class="text" style="width: 100rpx;">产品参数</view>
 				<!-- <view class="content"><view class="serviceitem" v-for="(item,index) in goodsData.service" :key="index">{{item.name}}</view></view> -->
+				<!-- <view class="" style="font-size: 26rpx;">{{productParameter.parameter_name}}&{{productParameter.parameter_value}}</view> -->
 				<view class="arrow">
 					<view class="icon iconfont icon-right"></view>
 				</view>
@@ -305,12 +306,12 @@
 		<!-- 详情 -->
 		<view class="description">
 			<view class="title">———— 商品详情 ————</view>
-			<view class="content">
-				<rich-text :nodes="descriptionStr"></rich-text>
+			<view class="content" v-for="(item, index) in goodsdetails.goods_details" style="width: 100%;">
+				<image :src="item" style="width: 100%;"></image>
 			</view>
 		</view>
 		<!--猜你喜欢-->
-		<speity style="padding-bottom: 110rpx;"></speity>
+		<speity style="padding-bottom: 110rpx;" :recommendList="recommendList"></speity>
 	</view>
 </template>
 
@@ -396,8 +397,14 @@
 				},
 				selectSpec: null, //选中规格
 				isKeep: false, //收藏
-				//商品描述html
-				descriptionStr: '<div style="text-align:center;"><img width="100%" src="https://ae01.alicdn.com/kf/HTB1t0fUl_Zmx1VjSZFGq6yx2XXa5.jpg"/><img width="100%" src="https://ae01.alicdn.com/kf/HTB1LzkjThTpK1RjSZFKq6y2wXXaT.jpg"/><img width="100%" src="https://ae01.alicdn.com/kf/HTB18dkiTbvpK1RjSZPiq6zmwXXa8.jpg"/></div>'
+				address:'',
+				goodsdetails:[],//产品详情
+				recommend:[],//上个页面携带参数
+				recommendList:[],//特色推荐
+				pagesize:10,
+				specification:[],//规格
+				checkedItem:[],//规格
+				productParameter:[],//产品参数
 			};
 		},
 		onLoad(option) {
@@ -406,7 +413,15 @@
 			this.showBack = false;
 			// #endif
 			//option为object类型，会序列化上个页面传递的参数
-			console.log(option.cid); //打印出上个页面传递的参数。
+			
+			this.recommend =  JSON.parse(JSON.stringify(option))
+			console.log('recommend'+this.recommend); //打印出上个页面传递的参数。
+			this.getgoodsdetails()
+			this.getrecommend()
+			this.getspecification()
+			this.getproductParameter()
+			this.getappraiseNum()
+			this.getappraiseList()
 		},
 		onReady() {
 			this.calcAnchor(); //计算锚点高度，页面数据是ajax加载时，请把此行放在数据渲染完成事件中执行以保证高度计算正确
@@ -521,13 +536,14 @@
 			toConfirmation() {
 				let tmpList = [];
 				let goods = {
-					id: this.goodsData.id,
-					img: '../../static/img/goods2.png',
-					name: this.goodsData.name,
-					spec: '规格:' + this.goodsData.spec[this.selectSpec],
-					price: this.goodsData.price,
+					id: this.goodsdetails.goods_id,
+					img: this.goodsdetails.goods_image,
+					name: this.goodsdetails.goods_name,
+					// spec: '规格:' + this.goodsdetails.spec[this.selectSpec],
+					price: this.goodsdetails.price,
 					number: this.goodsData.number,
-					selected: false
+					selected: false,
+					coupons: this.goodsdetails.coupons_list
 				};
 				tmpList.push(goods);
 				uni.setStorage({
@@ -653,9 +669,9 @@
 			onShare(){
 				let shareData = {
 					shareUrl:"http://localhost:8081/ ",
-					shareTitle:"分享的标题",
-					shareContent:"分享的描述",
-					shareImg:"../../static/img/goods2.png",
+					shareTitle:this.goodsdetails.goods_name,
+					shareContent:this.goodsdetails.goods_name,
+					shareImg:this.goodsdetails.goods_image,
 					appId : "wxd0e0881530ee4444", // 默认不传type的时候，必须传appId和appPath才会显示小程序图标
 					appPath : "pages/index/index",
 					appWebUrl : "http://localhost:8081/ ",
@@ -670,6 +686,117 @@
 					// 第二种关闭弹窗的方式
 					shareObj.close();
 				},5000); 
+			},
+			// 获取商品详情信息
+			getgoodsdetails() {
+				this.loading = true
+				let params = {
+					user_id: 0,
+					goods_id: this.recommend.goods_id,
+					address: this.address
+				}
+				params.sign = this.sign(params)
+				this.$api.goodsdetails(params).then((res) => {
+					this.loading = false;
+					this.goodsdetails = res.data.Response
+					console.log('goodsdetails', this.goodsdetails)
+					// console.log('navigation', this.navigation)
+				}).catch((err) => {
+					this.loading = false;
+				})
+			},
+			// 获取规格
+			getspecification() {
+				this.loading = true
+				let params = {
+					goodsId: this.recommend.goods_id
+				}
+				params.sign = this.sign(params)
+				this.$api.specification(params).then((res) => {
+					this.loading = false;
+					this.specification = res.data.Response
+					this.checkedItem = res.data.Response.spList[0]
+					console.log('specification', this.specification)
+					console.log('checkedItem', this.checkedItem)
+					// console.log('navigation', this.navigation)
+				}).catch((err) => {
+					this.loading = false;
+				})
+			},
+			// 获取产品参数
+			getproductParameter() {
+				this.loading = true
+				let params = {
+					goods_id: this.recommend.goods_id
+				}
+				params.sign = this.sign(params)
+				this.$api.productParameter(params).then((res) => {
+					this.loading = false;
+					this.productParameter = res.data.Response[0]
+					console.log('productParameter', this.productParameter[0])
+					// console.log('navigation', this.navigation)
+				}).catch((err) => {
+					this.loading = false;
+				})
+			},
+			// 获取商品评价数量
+			getappraiseNum() {
+				this.loading = true
+				let params = {
+					goods_id: this.recommend.goods_id,
+				}
+				params.sign = this.sign(params)
+				this.$api.appraiseNum(params).then((res) => {
+					this.loading = false;
+					this.appraiseNum = res.data.Response
+					console.log('appraiseNum', this.appraiseNum)
+					// console.log('navigation', this.navigation)
+				}).catch((err) => {
+					this.loading = false;
+				})
+			},
+			// 获取商品评价列表
+			getappraiseList() {
+				this.loading = true
+				let params = {
+					goods_id: this.recommend.goods_id,
+					pagesize: 20,
+					page: 1,
+					type: 1,
+				}
+				params.sign = this.sign(params)
+				this.$api.appraiseList(params).then((res) => {
+					this.loading = false;
+					this.appraiseList = res.data.Response
+					console.log('appraiseList', this.appraiseList)
+					// console.log('navigation', this.navigation)
+				}).catch((err) => {
+					this.loading = false;
+				})
+			},
+			// 获取特色推荐
+			getrecommend(){
+				this.loading = true
+				let getRecommendParams = {
+				        pagesize: 20,
+				        address: this.address,
+				        page: 1,
+				        type: 1,
+				    }
+				getRecommendParams.sign = this.sign(getRecommendParams)
+				this.$api.recommendList(getRecommendParams).then((res)=>{
+					this.loading = false;
+					// console.log('request success', res)
+				
+					this.recommendList = res.data.Response
+					console.log('recommendList_detals', this.recommendList)
+					// this.navigation = res.data.Response.list
+					// console.log('navigation', this.navigation)
+					// this.res = '请求结果 : ' + JSON.stringify(res);
+				}).catch((err)=>{
+					this.loading = false;
+					// console.log('request fail', err);
+				})
 			},
 		}
 	};
@@ -934,6 +1061,10 @@
 			font-weight: 600;
 			color: #333333;
 			line-height: 48upx;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+			overflow: hidden;
 		}
 	}
 
@@ -1648,10 +1779,13 @@
 			background: url(../../static/img/coupon.png) no-repeat;
 			 background-size: 100%;
 			 padding: 12rpx 22rpx;
-			 width: 100%;
+			 width: 150rpx;
+			 text-align: center;
 			text{
 				font-size: 26rpx;
 				color: #FFFFFF;
+				width: 100%;
+				text-align: center;
 				
 			}
 		}

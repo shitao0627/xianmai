@@ -72,7 +72,7 @@
 			<view class="yt-list-cell b-b" @click="toggleMask('show')">
 				<text class="cell-tit clamp">优惠券</text>
 				<text class="cell-tip active">
-					<text>3张可用</text>
+					<text>{{coupons.length}}张可用</text>
 					<text class="icon iconfont icon-right"></text>
 				</text>
 				<text class="cell-more wanjia wanjia-gengduo-d"></text>
@@ -120,14 +120,14 @@
 					<view class="title">优惠券</view>
 					<view class="icon iconfont icon-guanbi1"  @tap="toggleMask"></view>
 				</view>
-				<view class="coupon-item" v-for="(item,index) in couponList" :key="index">
+				<view class="coupon-item" v-for="(item,index) in coupons" :key="index">
 					<view class="con">
 						<view class="left">
-							<view class="price"><text style="font-size: 34rpx;padding-right: 10rpx;">&yen;</text>{{item.price}}</view>
-							<view class="price_jian">满300元可用</view>
+							<view class="price"><text style="font-size: 34rpx;padding-right: 10rpx;">&yen;</text>{{item.face_value}}</view>
+							<view class="price_jian">消费满{{item.available}}可用</view>
 						</view>
 						<view class="middle">
-							<view class="title">{{item.title}}</view>
+							<view class="title">123</view>
 							<view class="time">有效期至2019-06-30</view>
 						</view>
 						
@@ -231,6 +231,7 @@
 			return {
 				show: false,
 				buylist:[],		//订单列表
+				coupons:[],
 				maskState: 0, //优惠券面板显示状态
 				maskpay:0, //支付面板
 				desc: '', //备注
@@ -265,6 +266,8 @@
 				key:'buylist',
 				success: (ret) => {
 					this.buylist = ret.data;
+					this.coupons = ret.data[0].coupons
+					console.log('优惠券',this.coupons)
 					this.goodsPrice=0;
 					//合计
 					let len = this.buylist.length;

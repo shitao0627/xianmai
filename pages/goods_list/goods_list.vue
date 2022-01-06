@@ -5,21 +5,43 @@
 			<view class="goods_list_header_title">足浴耗品</view>
 			<view class="zhanwei"></view>
 		</view> -->
-		<tabs-swiper></tabs-swiper>
+		<tabs-swiper :subCategoryName="subCategoryName"></tabs-swiper>
 	</view>
 </template>
 
 <script>
-	export default {
+	export default { 
 		data() {
 			return {
-				
+				subCategoryName:[],
 			}
 		},
+		onLoad(options) {
+			this.subCategoryName = JSON.parse(decodeURIComponent(options.item));
+			console.log("subCategoryName"+this.subCategoryName)
+			this.getgoodsType()
+		},
 		methods: {
-			navigateBack:function(){
-			    uni.navigateBack()//返回上一页
-			}
+			getgoodsType() {
+				this.loading = true
+				let params = {
+					rnd: 123
+				}
+				params.sign = this.sign(params)
+				this.$api.goodsType(params).then((res) => {
+					this.loading = false;
+					// console.log('request success', res)
+			
+					this.goodsType = res.data.Response
+					console.log('goodsType', this.goodsType)
+					// this.navigation = res.data.Response.list
+					// console.log('navigation', this.navigation)
+					// this.res = '请求结果 : ' + JSON.stringify(res);
+				}).catch((err) => {
+					this.loading = false;
+					// console.log('request fail', err);
+				})
+			},
 		}
 	}
 </script>

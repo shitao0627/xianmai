@@ -3,9 +3,9 @@
 		<!-- <page-head title="swiper,可滑动视图"></page-head> -->
 		<view class="uni-margin-wrap">
 			<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
-				<swiper-item v-for="item in banner">
+				<swiper-item v-for="(item, index) in swiperInfo" :key="index">
 					<view class="swiper-item">
-						<image :src="item.src"></image>
+						<image :src="item.img_url"></image>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -40,31 +40,27 @@
 	export default {
 		data() {
 			return {
-				banner:[{
-					src:'../../static/img/banner14.png'
-				},{
-					src:'../../static/img/banner.jpg'
-				},{
-					src:'../../static/img/banner14.png'
-				}],
+				// banner:[{
+				// 	src:'../../static/img/banner14.png'
+				// },{
+				// 	src:'../../static/img/banner.jpg'
+				// },{
+				// 	src:'../../static/img/banner14.png'
+				// }],
 				indicatorDots: true,
 				autoplay: true,
 				interval: 5000,
 				duration: 500
 			}
 		},
+		props:{
+			swiperInfo: {
+				type: Array,
+				default: []
+		    },
+		},
 		methods: {
-			getList() {
-				uni.request({
-					url: "apis/news",
-					method: 'get',
-					dataType: 'json',
-					success: (res) => {
-						console.log(res.data);
-						this.productList = res.data;
-					},
-				});
-			},
+			
 		}
 	}
 </script>
@@ -114,4 +110,5 @@
         width:550rpx;
         padding:0 100rpx;
     }
+
 </style>

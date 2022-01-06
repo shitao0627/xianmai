@@ -17,22 +17,22 @@
 		<!--背景色-->
 		<view class="background">
 			<!-- banner -->
-			<banner></banner>
+			<banner :swiperInfo="swiperInfo"></banner>
 			<!--导航card-->
 			<view class="navigation">
 				<view class="navigation_card">
 					<view class="navigation_card_icon" v-for="item in navigation">
-						<image :src="item.src"></image>
-						<view>{{item.message}}</view>
+						<image :src="item.img_url"></image>
+						<view>{{item.title}}</view>
 					</view>
 				</view>
 			</view>
 			<!--商品分类-->
 			<view class="goods_category">
 				<view class="goods_category_card">
-					<view class="goods_category_card_icon" v-for="name in category" @tap="goodslist">
-						<image :src="name.src"></image>
-						<view>{{name.title}}</view>
+					<view class="goods_category_card_icon" v-for="(name,index) in category.slice(1)" :key="index" @tap="goodslist(name,index)">
+						<image :src="name.categoryUrl"></image>
+						<view>{{name.categoryName}}</view>
 					</view>
 				</view>
 			</view>
@@ -48,7 +48,7 @@
 				<text class="icon iconfont icon-zhi"></text>
 				<text class="ensure_card_text">下单立返3%</text>
 			</view>
-			<view class="ensure_card">
+			<view class="ensure_card" @tap="csapi">
 				<text class="icon iconfont icon-tuihuobaozhang"></text>
 				<text class="ensure_card_text">退货顺丰包邮</text>
 			</view>
@@ -58,11 +58,11 @@
 			<view class="favourable_activity">
 				<view class="favourable_activity_left">
 					<text>免费用品</text>
-					<image src="../../static/img/youhui.png"></image>
+					<image src="https://m.xianmaiyangsheng.com/xcxImg/image/zuliaoren/freetrial1.png"></image>
 				</view>
 				<view class="favourable_activity_center ">
 					<text>技师用品</text>
-					<image src="../../static/img/78824.png"></image>
+					<image src="https://m.xianmaiyangsheng.com/xcxImg/image/zuliaoren/freetrial2.png"></image>
 				</view>
 				<view class="favourable_activity_right">
 					<view class="favourable_activity_right_title">
@@ -73,15 +73,10 @@
 							<text class="">00</text>
 						</text>
 					</view>
-					<view class="snap_up">
-						<image src="../../static/img/img.png"></image>
-						<text class="activity_present_price">&yen;38</text>
-						<text class="activity_original_price">&yen;208</text>
-					</view>
-					<view class="snap_up">
-						<image src="../../static/img/img.png"></image>
-						<text class="activity_present_price">&yen;38</text>
-						<text class="activity_original_price">&yen;208</text>
+					<view class="snap_up" v-for="(item,index) in snapList.slice(1)" :key="index">
+						<image :src="item.goods_image"></image>
+						<text class="activity_present_price">&yen;{{item.flash_price}}</text>
+						<text class="activity_original_price">&yen;{{item.price}}</text>
 					</view>
 				</view>
 			</view>
@@ -90,7 +85,9 @@
 		<technician style="margin: 30rpx 0;"></technician>
 		<!--首页商品列表-->
 		<view class="speity">
-			<speity></speity>
+			<speity 
+			:recommendList="recommendList"
+			></speity>
 		</view>
 	</view>
 </template>
@@ -99,59 +96,117 @@
 	export default {
 		data() {
 			return {
-				navigation: [{
-						message: '打卡赚钱',
-						src: '../../static/img/card_1.png'
-					},
-					{
-						message: '打卡赚钱',
-						src: '../../static/img/9324.png'
-					},
-					{
-						message: '打卡赚钱',
-						src: '../../static/img/78679.png'
-					},
-					{
-						message: '打卡赚钱',
-						src: '../../static/img/card_1.png'
-					},
-					{
-						message: '打卡赚钱',
-						src: '../../static/img/78328.png'
-					}
-				],
-				category: [{
-					title: '足浴耗品',
-					src: '../../static/img/card_2.png'
-				}, {
-					title: '足浴耗品',
-					src: '../../static/img/75275.png'
-				}, {
-					title: '足浴耗品',
-					src: '../../static/img/goods2.png'
-				}, {
-					title: '足浴耗品',
-					src: '../../static/img/goods.png'
-				}, {
-					title: '足浴耗品',
-					src: '../../static/img/card_2.png'
-				}, {
-					title: '足浴耗品',
-					src: '../../static/img/75275.png'
-				}, {
-					title: '足浴耗品',
-					src: '../../static/img/card_2.png'
-				}, {
-					title: '足浴耗品',
-					src: '../../static/img/75275.png'
-				}]
+				swiperInfo:[],
+				navigation:[],
+				productClassify:[],
+				category: [],
+				recommendList:[],
+				pagesize:10,
+				address: '',
+				snapList:[],
 			}
 		},
+		onLoad() {
+			this.sendRequest()
+			this.getcategory()
+			this.getrecommend()
+			this.getsnap()
+		},
 		methods: {
-			
-			goodslist(){
+			sendRequest: function() {
+				this.loading = true
+				let banner = {
+					rnd: 123
+				}
+				banner.sign = this.sign(banner)
+				this.$api.banner(banner).then((res)=>{
+					this.loading = false;
+					// console.log('request success', res)
+					
+					// 轮播图信息
+					this.swiperInfo = res.data.Response.shuffling_list
+					// console.log('banner', this.swiperInfo)
+					this.navigation = res.data.Response.list
+					// console.log('navigation', this.navigation)
+					// this.res = '请求结果 : ' + JSON.stringify(res);
+				}).catch((err)=>{
+					this.loading = false;
+					// console.log('request fail', err);
+				})
+			},
+			getcategory(){
+				this.loading = true
+				let params = {
+					rnd: 123
+				}
+				params.sign = this.sign(params)
+				this.$api.category(params).then((res)=>{
+					this.loading = false;
+					// console.log('request success', res)
+
+					this.category = res.data.Response
+					// console.log('category', this.category)
+					// this.navigation = res.data.Response.list
+					// console.log('navigation', this.navigation)
+					// this.res = '请求结果 : ' + JSON.stringify(res);
+				}).catch((err)=>{
+					this.loading = false;
+					// console.log('request fail', err);
+				})
+			},
+			getrecommend(){
+				this.loading = true
+				let getRecommendParams = {
+				        pagesize: 20,
+				        address: this.address,
+				        page: 1,
+				        type: 1,
+				    }
+				getRecommendParams.sign = this.sign(getRecommendParams)
+				this.$api.recommendList(getRecommendParams).then((res)=>{
+					this.loading = false;
+					// console.log('request success', res)
+				
+					this.recommendList = res.data.Response
+					console.log('recommendList', this.recommendList)
+					// this.navigation = res.data.Response.list
+					// console.log('navigation', this.navigation)
+					// this.res = '请求结果 : ' + JSON.stringify(res);
+				}).catch((err)=>{
+					this.loading = false;
+					// console.log('request fail', err);
+				})
+			},
+			getsnap(){
+				this.loading = true
+				let snap = {
+					address: this.address
+				}
+				snap.sign = this.sign(snap)
+				this.$api.snap(snap).then((res)=>{
+					this.loading = false;
+					// console.log('request success', res)
+				
+					this.snapList = res.data.Response.flash_list
+					console.log('snapList', this.snapList)
+					// this.navigation = res.data.Response.list
+					// console.log('navigation', this.navigation)
+					// this.res = '请求结果 : ' + JSON.stringify(res);
+				}).catch((err)=>{
+					this.loading = false;
+					// console.log('request fail', err);
+				})
+			},
+			goodslist(name,index){
+				console.log(name)
+				console.log(index)
 				uni.navigateTo({
-					url:'../goods_list/goods_list'
+					url: '/pages/goods_list/goods_list?title='+name.categoryName+'&item='+JSON.stringify(name.children)+'&electId='+index+'&type=subClassify',
+				})
+			},
+			csapi(){
+				uni.navigateTo({
+					url:'../csapi/csapi'
 				})
 			}
 		}

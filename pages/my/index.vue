@@ -24,18 +24,17 @@
 				<view class="my_balance_number">{{item.number}}</view>
 				<view class="my_balance_name">{{item.name}}</view>
 			</view>
-		</view>
+		</view>  
 		<!--分享banner-->
 		<view class="mypage_share">
 			<image src="../../static/img/7857.png"></image>
-		</view>
+		</view> 
 		<view class="my_list">
 			<view class="my_list_icon" v-for="list in icon">
 				<navigator :url="list.url">
 					<view class="icon iconfont my_list_icons" :class="list.icon"></view>
 					<view class="icon_name">{{list.name}}</view>
 				</navigator>
-				
 			</view>
 		</view>
 		<!--招聘模块-->

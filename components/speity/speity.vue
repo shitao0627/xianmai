@@ -7,12 +7,12 @@
 			<view class="speity_header_point"></view>
 			<view class="speity_header_line"></view>
 		</view>
-		<view class="speity_card" v-for="item in card" @tap="gotodetails">
+		<view class="speity_card" v-for="item in recommendList"  @tap="gotodetails(item)">
 			<!-- 商品图片 -->
 			<view class="speity_img">
-				<image :src="item.src"></image>
+				<image :src="item.goods_image"></image>
 			</view>
-			<view class="speity_title">{{item.title}}</view>
+			<view class="speity_title">{{item.goods_name}}</view>
 			<view class="speity_details">
 				<text class="speity_price">&yen;{{item.price}}</text>
 				<view class="speity_details_model">
@@ -20,11 +20,11 @@
 						<text class="speity_share_name">分享</text>
 						<text class="speity_share_details">赚钱30%</text>
 					</view>
-					<view class="speity_mail">{{item.label}}</view>
+					<view class="speity_mail">包邮</view>
 				</view>
 			</view>
 			<view class="speity_bottom">
-				<view class="speity_people">{{item.people}}人购买</view>
+				<view class="speity_people">{{item.sales_volume}}人购买</view>
 				<view class="icon iconfont icon-31gouwuche speity_shopping"></view>
 			</view>
 		</view>
@@ -36,90 +36,21 @@
 		name:"speity",
 		data() {
 			return {
-				card:[{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				},{
-					src:'../../static/img/goods.png',
-					title:'一次性洗脸巾洁面巾',
-					price:'38',
-					label:'包邮',
-					people:'8332',
-				}]
+				
 			};
 		},
+		props:{
+			recommendList: {
+				type: Array,
+				default: () => []
+			},
+		},
 		methods:{
-			gotodetails(){
-			        uni.navigateTo({
-			            // url: 'test?id=1&name=uniapp'  c传递参数
-			
-			            url:"/pages/goods_details/goods_details?"
-			
-			        })
-			    }
+			gotodetails(item){
+				uni.navigateTo({
+					url:"/pages/goods_details/goods_details?goods_id="+item.goods_id+'&img='+item.goods_image+'&name='+item.goods_name+'&address='+item.addresss+'&persionNum='+item.sales_volume
+				})
+			},
 		}
 	}
 </script>
@@ -157,18 +88,18 @@
 			}
 		}
 		.speity_card{
-			width: 150px;
-			margin: 6px;
+			width: 310rpx;
+			margin: 10rpx;
 			background: #FFFFFF;
-			padding: 0px 10px;
+			padding: 0px 20rpx;
 			.speity_img{
-				width: 150px;
-				// height: 150px;
+				width: 300rpx;
+				height: 300rpx;
 				text-align: center;
-				margin: 25px auto;
+				margin: 40rpx auto;
 				image{
-					width: 150px;
-					height: 130px;
+					width: 100%;
+					height: 100%;
 				}
 			}
 			.speity_title{
@@ -176,7 +107,7 @@
 				font-family: PingFang SC;
 				font-weight: 500;
 				color: #2D2D2D;
-				line-height: 28px;
+				line-height: 40rpx;
 				overflow: hidden; // 溢出隐藏
 				text-overflow: ellipsis; // 显示省略号
 				white-space: nowrap; // 不换行
@@ -186,7 +117,7 @@
 				align-items: center;
 				justify-content:space-between;
 				border-bottom: 1px solid #F1F2F5;
-				padding-bottom: 5px;
+				padding-bottom: 10rpx;
 				.speity_price{
 					font-size: 1rem;
 					font-weight: 500;
@@ -198,18 +129,18 @@
 					
 					.speity_share{
 						border: 1px solid #E73E37;
-						border-radius: 4px;
+						border-radius: 8rpx;
 						background: #FAF1F3;
 						.speity_share_name{
 							background: #E73E37;
 							border-radius: 2px 0px 0px 2px;
-							padding: 1px 2px;
+							padding: 2rpx 4rpx;
 							color: #FFFFFF;
 							font-size: .5rem;
 						}
 						.speity_share_details{
 							border-radius: 2px 0px 0px 2px;
-							padding: 1px 3px;
+							padding: 2rpx 6rpx;
 							color: #E73E37;
 							font-size: .5rem;
 						}

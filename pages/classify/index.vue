@@ -8,7 +8,7 @@
 			</view>
 			<view class="icon iconfont icon-fenxiang icon_fenxiang"></view>
 		</view>
-		
+
 		<!--购买历史-->
 		<view class="classify_record">
 			<view class="classify_shop">我的常购</view>
@@ -22,26 +22,27 @@
 		<view class="classside">
 			<scroll-view @scroll="leftScroll" class="left_view p_r" scroll-y :style="{ height: scrollH + 'px' }"
 				:scroll-into-view="leftScrollTop()">
-				<block v-for="(item, index) in dataArr" :key="index">
+				<block v-for="(item, index) in goodsCategory" :key="index">
 					<view :class="[left_selectIndex == index ? 'left_item_s' : '', 'left_item']" :id="'left_' + index"
-						@click="leftTap({ item, index })">{{ item.name }}</view>
+						@click="leftTap({ item, index })">{{ item.categoryName }}</view>
 				</block>
 				<view class="seletItem" :style="{ top: left_selectIndex * 60 + 'px' }"></view>
 				<view class="" style="height: 80px;">
 					<!-- 站位 -->
 				</view>
 			</scroll-view>
-		
+
 			<scroll-view @scroll="rightScroll" class="right_view" scroll-y :style="{ height: scrollH + 'px' }"
 				:scroll-into-view="'left_' + right_selectIndex" scroll-with-animation>
-				<block v-for="(item, index) in dataArr" :key="index">
+				<block v-for="(item, index) in goodsCategory" :key="index">
 					<view :ref="'left_' + index" class="right_item " :id="'left_' + index">
-						<text class="right_item_title ">{{ item.name }}</text>
+						<text class="right_item_title ">{{ item.categoryName }}</text>
 						<view class="right_item_view">
-							<view class="item" v-for="(subitem, subindex) in item.subArr" :key="subindex"
-								@click="rightTap(item,subitem)">
-								<image :src="subitem.img" :style="{ width: '100%', height: subItemW + 'px' }"></image>
-								<text>{{ subitem.name }}</text>
+							<view class="item" v-for="(cItem,cIndex) in item.children" :key="cIndex"
+								@click.stop="toSubClassify(item,cItem,cIndex)">
+								<image :src="cItem.subCategoryUrl" :style="{ width: '100%', height: subItemW + 'px' }">
+								</image>
+								<text>{{ cItem.subCategoryName }}</text>
 							</view>
 						</view>
 					</view>
@@ -68,20 +69,21 @@
 				right_selectIndex: 0,
 				ttscrollH: 0, //总高度
 				placeholderH: 0, //占位高度
-
+				goodsCategory: [],
+				
 				heighArr: [],
 				dataArr: testdata,
-				record:[{
-					src:'../../static/img/goods2.png'
-				},{
-					src:'../../static/img/goods.png'
-				},{
-					src:'../../static/img/goods2.png'
-				},{
-					src:'../../static/img/goods2.png'
-				},{
-					src:'../../static/img/goods.png'
-				},]
+				record: [{
+					src: '../../static/img/goods2.png'
+				}, {
+					src: '../../static/img/goods.png'
+				}, {
+					src: '../../static/img/goods2.png'
+				}, {
+					src: '../../static/img/goods2.png'
+				}, {
+					src: '../../static/img/goods.png'
+				}, ]
 			};
 		},
 		onLoad() {
@@ -89,6 +91,8 @@
 			setTimeout(function() {
 				self.computerH();
 			}, 100);
+			this.getcategory()
+			
 		},
 		methods: {
 			leftTap: function(e) {
@@ -115,16 +119,24 @@
 
 			// 右边点击
 			rightTap: function(item, subitem) {
-				 uni.navigateTo({
+				uni.navigateTo({
 					// url: 'test?id=1&name=uniapp'  c传递参数
-		
-					url:"/pages/goods_list/goods_list"
-		
+
+					url: "/pages/goods_list/goods_list"
+
 				})
 				// uni.showModal({
 				// 	title: `一级:${item.name}\n二级:${subitem.name}`,
 				// 	showCancel: false
 				// });
+			},
+			toSubClassify(item, cItem, cIndex) {
+				console.log(item)
+				console.log(cItem)
+				uni.navigateTo({
+					url: '/pages/goods_list/goods_list?title='+item.categoryName+'&item='+JSON.stringify(item.children)+'&electId='+cIndex+'&type=subClassify',
+				
+				})
 			},
 			rightScroll: function(e) {
 				let scrollH = e.detail.scrollTop + 30;
@@ -169,7 +181,28 @@
 				// 	})
 				// }).exec()
 				// console.log('ttscrollH',this.$refs.left_0)
-			}
+			},
+			getcategory() {
+				this.loading = true
+				let params = {
+					rnd: 123
+				}
+				params.sign = this.sign(params)
+				this.$api.category(params).then((res) => {
+					this.loading = false;
+					// console.log('request success', res)
+
+					this.goodsCategory = res.data.Response
+					console.log('goodsCategory', this.goodsCategory)
+					// this.navigation = res.data.Response.list
+					// console.log('navigation', this.navigation)
+					// this.res = '请求结果 : ' + JSON.stringify(res);
+				}).catch((err) => {
+					this.loading = false;
+					// console.log('request fail', err);
+				})
+			},
+			
 		}
 	};
 </script>
@@ -178,44 +211,51 @@
 	* {
 		box-sizing: border-box;
 	}
+
 	// 顶部搜索框
-	.classify_top{
+	.classify_top {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		padding: 10px;
 		border-bottom: 1px solid #E7E7E7;
 		background: #FFFFFF;
-		.classify_search{
+
+		.classify_search {
 			width: 630rpx;
 			background: #EDEDED;
 			border-radius: 32px;
 			display: flex;
 			align-items: center;
-			.icon_search{
+
+			.icon_search {
 				font-size: 1.5rem;
 				color: #999999;
 				padding: 3px 10px;
 			}
-			.search_text{
+
+			.search_text {
 				font-size: 1rem;
 				color: #999999;
 				line-height: 35px;
 			}
 		}
-		.icon_fenxiang{
+
+		.icon_fenxiang {
 			font-size: 1.8rem;
 			color: #666666;
-			
+
 		}
 	}
+
 	// 我的常购
-	.classify_record{
+	.classify_record {
 		display: flex;
 		align-items: center;
 		margin-bottom: 10px;
 		background: #FFFFFF;
-		.classify_shop{
+
+		.classify_shop {
 			width: 210rpx;
 			box-shadow: 0px 5px 5px 0px #E7E7E7;
 			font-size: .9rem;
@@ -224,22 +264,25 @@
 			color: #333333;
 			text-align: center;
 			line-height: 60px;
-			
+
 		}
-		.classify_shop_list{
+
+		.classify_shop_list {
 			width: 530rpx;
 			height: 60px;
 			display: flex;
 			align-items: center;
+
 			// justify-content: space-between;
-			.classify_shop_list_card{
+			.classify_shop_list_card {
 				background: #E7E7E7;
 				border-radius: 50%;
 				width: 43px;
 				height: 43px;
 				border-radius: 50%;
 				margin-left: 10px;
-				image{
+
+				image {
 					width: 43px;
 					height: 43px;
 					border-radius: 50%;
@@ -247,6 +290,7 @@
 			}
 		}
 	}
+
 	// 分类列表
 	.classside {
 		display: grid;
@@ -261,10 +305,12 @@
 	.left_view {
 		background-color: #FFFFFF;
 		position: relative;
-		.uni-scroll-view{
+
+		.uni-scroll-view {
 			width: 220rpx;
-			
+
 		}
+
 		// 蒙版
 		.seletItem {
 			height: 60px;
@@ -278,7 +324,7 @@
 			transition: top 0.2s linear;
 			display: flex;
 			align-items: center;
-			
+
 			&::before {
 				content: '';
 				width: 8rpx;
@@ -298,7 +344,8 @@
 			margin-bottom: 0rpx;
 			position: relative;
 			font-weight: bold;
-			font-size: 30rpx;color: #444;
+			font-size: 30rpx;
+			color: #444;
 		}
 
 		.left_item_s {
@@ -314,11 +361,13 @@
 		background-color: #F9F9F9;
 		padding: 0rpx 12px;
 		width: 540rpx;
+
 		.right_item {
 			background: #FFFFFF;
 			border-radius: 8px;
 			margin: 10px 0px;
 			padding: 10px;
+
 			.right_item_title {
 				display: block;
 				color: #555;
@@ -337,13 +386,16 @@
 					display: flex;
 					flex-flow: column nowrap;
 					align-items: center;
-					image{
+
+					image {
 						border-radius: 14rpx;
 					}
+
 					text {
+						padding-top: 8rpx;
 						color: #333;
-						line-height: 58rpx;
-						font-size: 28rpx;
+						line-height: 26rpx;
+						font-size: 22rpx;
 						font-family: PingFang SC;
 						font-weight: bold;
 						color: #333333;
