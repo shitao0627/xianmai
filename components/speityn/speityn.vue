@@ -20,7 +20,7 @@
 						<text class="speity_share_name">分享</text>
 						<text class="speity_share_details">赚钱30%</text>
 					</view>
-					<view class="speity_mail">{{item.addresss}}</view>
+					<view class="speity_mail">包邮</view>
 				</view>
 			</view>
 			<view class="speity_bottom">
