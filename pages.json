@@ -186,16 +186,32 @@
                 "enablePullDownRefresh": false
             }
             
-        }
-        ,{
-            "path" : "pages/csapi/csapi",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
+        },{
+			"path":"pages/my/Myevaluation/Myevaluation",
+			"style":{
+				"navigationBarTitleText":"我的订单",
+				"enablePullDownRefresh":false,
+				"navigationStyle":"custom"
+			}
+		},{
+			"path":"pages/my/unorder/unorder",
+			"style":{
+				"enablePullDownRefresh":false,
+				"navigationBarTitleText":"订单详情"
+			}
+		},{
+			"path":"pages/my/Applyforrefund/Applyforrefund",
+			"style":{
+				"enablePullDownRefresh":false,
+				"navigationBarTitleText":"申请退款"
+			}
+		},{
+			"path":"pages/my/goevaluate/goevaluate",
+			"style":{
+				"enablePullDownRefresh":false,
+				"navigationBarTitleText":"发表评价"
+			}
+		}
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "black",

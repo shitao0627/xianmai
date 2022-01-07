@@ -77,6 +77,7 @@
 				default: () => []
 			},
 		},
+
 		computed: {
 			style() {
 				return `width:${this.navItemWidth}px; left:${this.navItemLeft}px`;
