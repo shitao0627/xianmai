@@ -1495,13 +1495,14 @@
 						background: #555555;
 						color: #FFFFFF;
 						font-size: 32rpx;
+						background: linear-gradient(90deg, #46E3BC, #32AADF);
 					}
 					.button_btn_right{
 						width: 50%;
 						font-size: 32rpx;
 						text-align: center;
 						line-height: 110rpx;
-						background: linear-gradient(90deg, #46E3BC, #32AADF);
+						background: #555555;
 						color: #FFFFFF;
 					}
 				}

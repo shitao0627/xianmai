@@ -26,6 +26,9 @@ const store = new Vuex.Store({
 				key: 'uerInfo'
 			})
 		}
+	},
+	actions:{
+		
 	}
 })
 export default store

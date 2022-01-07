@@ -30,7 +30,7 @@
 			<!--商品分类-->
 			<view class="goods_category">
 				<view class="goods_category_card">
-					<view class="goods_category_card_icon" v-for="(name,index) in category.slice(1)" :key="index" @tap="goodslist(name,index)">
+					<view class="goods_category_card_icon" v-for="(name,index) in category.slice(1)" :key="index" @tap="goClassify(name,index)">
 						<image :src="name.categoryUrl"></image>
 						<view>{{name.categoryName}}</view>
 					</view>
@@ -197,11 +197,11 @@
 					// console.log('request fail', err);
 				})
 			},
-			goodslist(name,index){
+			goClassify(name,index){
 				console.log(name)
 				console.log(index)
-				uni.navigateTo({
-					url: '/pages/goods_list/goods_list?title='+name.categoryName+'&item='+JSON.stringify(name.children)+'&electId='+index+'&type=subClassify',
+				uni.reLaunch({
+					url: '/pages/classify/index?index='+(index+1)
 				})
 			},
 			csapi(){

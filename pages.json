@@ -233,6 +233,15 @@
 				"enablePullDownRefresh":false
 			}
 		}
+        ,{
+            "path" : "pages/csgood_list/csgood_list",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "black",

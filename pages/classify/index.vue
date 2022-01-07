@@ -70,7 +70,7 @@
 				ttscrollH: 0, //总高度
 				placeholderH: 0, //占位高度
 				goodsCategory: [],
-				
+				index:0,//进入页面下标
 				heighArr: [],
 				dataArr: testdata,
 				record: [{
@@ -86,18 +86,25 @@
 				}, ]
 			};
 		},
-		onLoad() {
+		onLoad(options) {
 			let self = this;
 			setTimeout(function() {
 				self.computerH();
 			}, 100);
 			this.getcategory()
-			
+			this.index = options.index
+			console.log('index',this.index)
+			if(this.index != null){
+				this.left_selectIndex = this.index
+				this.right_selectIndex = this.index
+				console.log("123",this.left_selectIndex,this.right_selectIndex)
+			}
 		},
 		methods: {
 			leftTap: function(e) {
 				this.left_selectIndex = e.index;
 				this.right_selectIndex = e.index;
+				console.log(this.left_selectIndex,this.right_selectIndex)
 			},
 			// 左侧滚动
 			leftScroll: function(e) {
