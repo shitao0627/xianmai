@@ -27,7 +27,7 @@
 							上传凭证
 						</view>
 						<view class="text">
-							（最多三张）
+							（最多五张）
 						</view>
 					</view>
 				</upload>
