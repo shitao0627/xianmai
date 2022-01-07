@@ -125,6 +125,10 @@
 			}
 		},
 		methods: {
+			//微信登录
+			arr(){
+				console.log(1)
+			},
 			bindLogin(e) {  
 				let name = e.detail.value.nameValue,  
 					password = e.detail.value.passwordValue;  

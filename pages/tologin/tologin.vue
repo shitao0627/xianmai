@@ -11,7 +11,7 @@
 		<view class="login_button">
 			<view class="login_weixin" @tap="">
 				<view class="icon iconfont icon-weixin"></view>
-				<view class="login_weixin_name">微信登录</view>
+				<view class="login_weixin_name"  @click="arr">微信登录</view>
 			</view>
 			<view class="login_phone" @tap="login_phone">手机账号密码登录</view>
 		</view>
@@ -27,6 +27,14 @@
 			}
 		},
 		methods: {
+			arr(){
+				uni.login({
+					provider:"weixin",
+					success:res=>{
+						console.log(res)
+					}
+				})
+			},
 			toindex(){
 				uni.switchTab({
 					url:"../index/index"

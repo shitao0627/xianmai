@@ -27,7 +27,7 @@
 							上传凭证
 						</view>
 						<view class="text">
-							（最多五张）
+							（最多三张）
 						</view>
 					</view>
 				</upload>
@@ -55,6 +55,9 @@
 		methods:{
 			Submit() {
 				console.log(this.data)
+				uni.navigateTo({
+					url:"/pages/my/successOk/successOk"
+				})
 			},
 			select(e) {
 				if (e.tempFilePaths.length == 1) {

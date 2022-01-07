@@ -184,7 +184,8 @@
 				uni.navigateTo({
 					url:"/pages/my/Applyforrefund/Applyforrefund?id="+id
 				})
-			}
+			},
+			
 		}
 	}
 </script>

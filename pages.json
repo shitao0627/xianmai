@@ -211,6 +211,27 @@
 				"enablePullDownRefresh":false,
 				"navigationBarTitleText":"发表评价"
 			}
+		},
+		{"path":"pages/my/Confirmreceipt/Confirmreceipt",
+          "style":{
+			  "enablePullDownRefresh":false,
+			  "navigationBarTitleText":"订单详情"
+		  }		
+		},
+		{
+			"path":"pages/my/successOk/successOk",
+			"style":{
+				"enablePullDownRefresh":false,
+				"navigationStyle":"custom",
+				"navigationBarTitleText":"评价成功"
+			}
+		},
+		{
+			"path":"pages/my/myorder/myorder",
+			"style":{
+				"navigationBarTitleText":"我的评价",
+				"enablePullDownRefresh":false
+			}
 		}
     ],
 	"globalStyle": {

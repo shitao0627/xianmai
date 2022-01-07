@@ -1,9 +1,9 @@
 <template>
-	<!-- 取消订单 -->
+	<!-- 确认收货 -->
 	<view class="unorder">
 		<view class="unorder-header">
 			<view class="unorder-header-box">
-				<text>交易已取消</text>
+				<text>交易成功</text>
 				<image class="unorder-header-img" src="../../../static/img/user.png" mode=""></image>
 			</view>
 		</view>
@@ -24,8 +24,14 @@
 		</view>
 		<Orderdetails></Orderdetails>
 		<view class="footer-btn">
-			<view class="btn">
-				删除订单
+			<view class="Topay" @click="goevaluate()">
+				去评价
+			</view>
+			<view class="Topay">
+				<navigator>再来一单</navigator>
+			</view>
+			<view class="btn"@click="refund()">
+				申请退款
 			</view>
 		</view>
 	</view>
@@ -43,7 +49,19 @@
 				Ordernum:"",
 			}
 		},
-		components:{Orderdetails}
+		components:{Orderdetails},
+		methods:{
+			refund(id){
+				uni.navigateTo({
+					url:"/pages/my/Applyforrefund/Applyforrefund?id="+id
+				})
+			},
+			goevaluate(id){
+				uni.navigateTo({
+					url:"/pages/my/goevaluate/goevaluate?id="+id
+				})
+			}
+		}
 	}
 </script>
 
@@ -107,6 +125,18 @@
 				float: right;
 				margin-top: 20rpx;
 				margin-right: 20rpx;
+			}
+			.Topay{
+				width: 158rpx;
+				height: 58rpx;
+				border: 1rpx solid #46E3BC;
+				text-align: center;
+				line-height: 58rpx;
+				color: #46E3BC;
+				float: right;
+				margin-top: 25rpx;
+				margin-right: 21rpx;
+				border-radius: 8rpx;
 			}
 		}
 	}

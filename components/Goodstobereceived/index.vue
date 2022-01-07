@@ -56,11 +56,11 @@
 				</view>
 			</view>
 			<view class="Pendingpayment-btn-box">
-				<view class="Topay">
-					<navigator>确认收货</navigator>
+				<view class="Topay" @click="Confirmreceipt(item.orderNum)">
+					确认收货
 				</view>
-				<view class="unorder">
-					<navigator>申请退款</navigator>
+				<view class="unorder" @click="refund(item.orderNum)">
+					<view>申请退款</view>
 				</view>
 			</view>
 		</view>
@@ -186,6 +186,19 @@
 				return arr
 			}
 		},
+		methods:{
+			refund(id){
+				uni.navigateTo({
+					url:"/pages/my/Applyforrefund/Applyforrefund?id="+id
+				})
+			},
+			Confirmreceipt(id){
+				uni.navigateTo({
+					url:"/pages/my/Confirmreceipt/Confirmreceipt?id="+id
+				})
+			}
+		}
+		
 	}
 </script>
 
