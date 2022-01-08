@@ -138,15 +138,17 @@
 					RegistrationID:this.openId,
 				}
 				params.sign = this.sign(params)
-				this.$api.weixinlogin(params).then((res) => {
-					this.loading = false;
-					// console.log('request success', res)
+				console.log(params)
+				this.$store.dispatch("userlogin",params)
+			// 	this.$api.weixinlogin(params).then((res) => {
+			// 		this.loading = false;
+			// 		// console.log('request success', res)
 			
-					this.user = res.data.Response
-					console.log('user', JSON.stringify(this.user))
-				}).catch((err) => {
-					this.loading = false;
-				})
+			// 		this.user = res.data.Response
+			// 		console.log('user', JSON.stringify(this.user))
+			// 	}).catch((err) => {
+			// 		this.loading = false;
+			// 	})
 			},
 		},
 		

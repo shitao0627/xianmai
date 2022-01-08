@@ -27,28 +27,7 @@
 			}
 		},
 		methods: {
-<<<<<<< .merge_file_a01576
-			arr(){
-				console.log(1)
-				uni.getProvider({
-				    service: 'oauth',
-				    success: function (res) {
-				        console.log(res.provider)
-				        if (res.provider.indexOf('weixin')) {
-				            uni.login({
-				                provider: 'weixin',
-				                success: function (loginRes) {
-				                    console.log(JSON.stringify(loginRes));
-				                }
-				            });
-				        }
-				    }
-				});
-			},
-			toindex(){
-=======
 			toindex() {
->>>>>>> .merge_file_a03732
 				uni.switchTab({
 					url: "../index/index"
 				})
@@ -81,6 +60,7 @@
 								console.log('-------获取微信用户所有-----');
 								console.log(JSON.stringify(infoRes.userInfo));
 								that.userInfo = JSON.parse(JSON.stringify(infoRes.userInfo))
+								that.$store.commit("login",that.userInfo)
 								uni.reLaunch({
 									url:'../my/index?openId='+that.userInfo.openId+'&nickName='+that.userInfo.nickName+'&avatarUrl='+that.userInfo.avatarUrl+'&unionId='+that.userInfo.unionId
 								})

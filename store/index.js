@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import  axios  from "../api/index.js"
+
 
 Vue.use(Vuex); //vue的插件机制
 
@@ -28,7 +30,38 @@ const store = new Vuex.Store({
 		}
 	},
 	actions:{
-		
+		userlogin(context,provider){
+			console.log(provider)
+			axios("/Lib/GetAddWXUser","GET",provider).then(res=>{
+				console.log(res.Response)
+				context.commit("login",res.Response)
+			})
+			
+			// return  new Promise((resolv,rej)=>{
+			// uni.request({
+			// 	url:"https://api.xianmaiyangsheng.com:5443/api/Lib/GetAddWXUser",
+			// 	method:"GET",
+			// 	data:provider,
+			// 	success:res=>{
+			// 		console.log(res.data.Response)
+			// 		resolv(res.data.Response)
+			// 	},
+			// 	fail:res=>{
+			// 		rej(res.data.Response)
+			// 	}
+			// })	
+			// }).then(res=>{
+			// 	console.log(res)
+			// 	context.commit("login",res)
+			// })
+			
+			
+			
+			// this.weixinlogin(provider).then(res=>{
+			// 	console.log(res.data.Response)
+			// 	context.commit("login",res.data.Response)
+			// })
+		}
 	}
 })
 export default store
