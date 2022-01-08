@@ -28,12 +28,21 @@
 		},
 		methods: {
 			arr(){
-				uni.login({
-					provider:"weixin",
-					success:res=>{
-						console.log(res)
-					}
-				})
+				console.log(1)
+				uni.getProvider({
+				    service: 'oauth',
+				    success: function (res) {
+				        console.log(res.provider)
+				        if (res.provider.indexOf('weixin')) {
+				            uni.login({
+				                provider: 'weixin',
+				                success: function (loginRes) {
+				                    console.log(JSON.stringify(loginRes));
+				                }
+				            });
+				        }
+				    }
+				});
 			},
 			toindex(){
 				uni.switchTab({

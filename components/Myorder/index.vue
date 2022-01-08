@@ -144,6 +144,7 @@
 				height: 80rpx;
 				text-align: center;
 				font-size: 26rpx;
+				position: relative;
 			}
 			.active{
 				color:#46E2BC;
