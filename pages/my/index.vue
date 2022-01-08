@@ -6,10 +6,10 @@
 		<view class="my_header">
 			<view class="header_left">
 				<view class="header_img">
-					<image src="../../static/img/user.png"></image>
+					<image :src="userInfo.avatar"></image>
 				</view>
 				<view class="header_nickname">
-					<view class="user_nickname">用户名</view>
+					<view class="user_nickname">{{userInfo.nick_name}}</view>
 					<view class="user_bianji">
 						<text class="">编辑个人资料</text>
 						<text class="icon iconfont icon-bianji" style="font-size: .8rem;"></text>
@@ -20,14 +20,26 @@
 		</view>
 		<!--资产-->
 		<view class="my_balance">
-			<view class="my_balance_category" v-for="item in balance">
-				<view class="my_balance_number">{{item.number}}</view>
-				<view class="my_balance_name">{{item.name}}</view>
+			<view class="my_balance_category">
+				<view class="my_balance_number">{{userInfo.amount}}</view>
+				<view class="my_balance_name">余额</view>
+			</view>
+			<view class="my_balance_category">
+				<view class="my_balance_number">0</view>
+				<view class="my_balance_name">佣金</view>
+			</view>
+			<view class="my_balance_category">
+				<view class="my_balance_number">{{userInfo.count_wsy}}</view>
+				<view class="my_balance_name">优惠券</view>
+			</view>
+			<view class="my_balance_category">
+				<view class="my_balance_number">{{userInfo.keeping_bean}}</view>
+				<view class="my_balance_name">养生豆</view>
 			</view>
 		</view>
 		<!--分享banner-->
 		<view class="mypage_share">
-			<image src="../../static/img/7857.png"></image>
+			<image src="../../static/img/7857.png" @click="onShare()"></image>
 		</view>
 		<view class="my_list">
 			<view class="my_list_icon" v-for="list in icon">
@@ -48,6 +60,7 @@
 </template>
 
 <script>
+	import appShare, { closeShare } from "@/utils/share.js"
 	export default{
 		data() {
 			return {
@@ -118,16 +131,39 @@
 			}
 		},
 		methods:{
-			set(){
-				uni.navigateTo({
-					url:"../set_up/set_up"
-				})
+			// 分享
+			onShare(){
+				let shareData = {
+					shareUrl:"http://localhost:8081/ ",
+					shareTitle:this.goodsdetails.goods_name,
+					shareContent:this.goodsdetails.goods_name,
+					shareImg:this.goodsdetails.goods_image,
+					appId : "wxd0e0881530ee4444", // 默认不传type的时候，必须传appId和appPath才会显示小程序图标
+					appPath : "pages/index/index",
+					appWebUrl : "http://localhost:8081/ ",
+				};
+				let shareObj = appShare(shareData,res => {
+					console.log("分享成功回调",res);
+					// 分享成功后关闭弹窗
+					// 第一种关闭弹窗的方式
+					closeShare();
+				});
+				setTimeout(() => {
+					// 第二种关闭弹窗的方式
+					shareObj.close();
+				},5000); 
 			},
 			set(){
 				uni.navigateTo({
 					url:"../set_up/set_up"
 				})
 			},
+			set(){
+				uni.navigateTo({
+					url:"../set_up/set_up"
+				})
+			},
+<<<<<<< HEAD
 			getweixinlogin() {
 				this.loading = true
 				let params = {
@@ -140,6 +176,18 @@
 				params.sign = this.sign(params)
 				console.log(params)
 				this.$store.dispatch("userlogin",params)
+=======
+			// getweixinlogin() {
+			// 	this.loading = true
+			// 	let params = {
+			// 		platform:2,
+			// 		unionid:this.unionId,
+			// 		nickname:this.nickName,
+			// 		avatar:this.avatarUrl,
+			// 		RegistrationID:this.openId,
+			// 	}
+			// 	params.sign = this.sign(params)
+>>>>>>> 3c7500a43857dd7fbdbf108e8126de8957a36a6b
 			// 	this.$api.weixinlogin(params).then((res) => {
 			// 		this.loading = false;
 			// 		// console.log('request success', res)
@@ -149,17 +197,16 @@
 			// 	}).catch((err) => {
 			// 		this.loading = false;
 			// 	})
+<<<<<<< HEAD
 			},
+=======
+			// },
+>>>>>>> 3c7500a43857dd7fbdbf108e8126de8957a36a6b
 		},
-		
+		  
 		onLoad(options) {
-			this.unionId = options.unionId
-			this.nickname = options.nickname
-			this.avatarUrl = options.avatarUrl
-			this.openId = options.openId
-			console.log('userInfo',JSON.stringify(this.unionId))
-			console.log('nickname',JSON.stringify(this.nickname))
-			this.getweixinlogin()
+			this.userInfo = JSON.parse(options.userInfo) 
+			console.log('userInfo',this.userInfo)
 		}
 	}
 </script>

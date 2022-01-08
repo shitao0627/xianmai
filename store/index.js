@@ -14,8 +14,9 @@ const store = new Vuex.Store({
 	mutations: {
 		login(state, provider) { //改变登录状态  
 			state.hasLogin = true
-			state.uerInfo.token = provider.token
-			state.uerInfo.userName = provider.user_name
+			state.uerInfo.nick_name = provider.s
+			state.uerInfo.user_id = provider.user_id
+			state.uerInfo.avatar = provider.avatar
 			uni.setStorage({ //将用户信息保存在本地  
 				key: 'uerInfo',
 				data: provider
@@ -29,6 +30,7 @@ const store = new Vuex.Store({
 			})
 		}
 	},
+<<<<<<< HEAD
 	actions:{
 		userlogin(context,provider){
 			console.log(provider)
@@ -62,6 +64,10 @@ const store = new Vuex.Store({
 			// 	context.commit("login",res.data.Response)
 			// })
 		}
+=======
+	actions: {
+
+>>>>>>> 3c7500a43857dd7fbdbf108e8126de8957a36a6b
 	}
 })
 export default store
