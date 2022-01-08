@@ -134,6 +134,14 @@ export const hoursTo = (data) => {
         data,
     })
 }
+// 	微信登录
+export const weixinlogin = (data) => {
+    return http.request({
+        url: '/Lib/GetAddWXUser',
+        method: 'GET', 
+        data,
+    })
+}
 // 默认全部导出  import api from '@/common/vmeitime-http/'
 export default {
 	test,
@@ -148,6 +156,7 @@ export default {
 	productParameter,
 	appraiseNum,
 	appraiseList,
-	hoursTo
+	hoursTo,
+	weixinlogin
 	
 }
