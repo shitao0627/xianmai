@@ -24,6 +24,7 @@
 		data() {
 			return {
 				userInfo:[],
+				user:[]
 			}
 		},
 		methods: {
@@ -60,16 +61,37 @@
 								console.log('-------获取微信用户所有-----');
 								console.log(JSON.stringify(infoRes.userInfo));
 								that.userInfo = JSON.parse(JSON.stringify(infoRes.userInfo))
-								uni.reLaunch({
-									url:'../my/index?openId='+that.userInfo.openId+'&nickName='+that.userInfo.nickName+'&avatarUrl='+that.userInfo.avatarUrl+'&unionId='+that.userInfo.unionId
-								})
+								that.getweixinlogin()
 							}
 						});
 						
-					}
+					},
 				});
 			},
-
+			getweixinlogin() {
+				this.loading = true
+				let params = {
+					platform:2,
+					unionid:this.userInfo.unionId,
+					nickname:this.userInfo.nickName,
+					avatar:this.userInfo.avatarUrl,
+					RegistrationID:this.userInfo.openId,
+				}
+				params.sign = this.sign(params)
+				this.$api.weixinlogin(params).then((res) => {
+					this.loading = false;
+					// console.log('request success', res)
+			
+					this.user = res.data.Response
+					console.log('user', JSON.stringify(this.user))
+					
+					uni.reLaunch({
+						url:'../my/index?userInfo='+JSON.stringify(this.user)
+					});
+				}).catch((err) => {
+					this.loading = false;
+				})
+			},
 		}
 	}
 </script>

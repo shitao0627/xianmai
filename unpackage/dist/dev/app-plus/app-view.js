@@ -3460,7 +3460,7 @@ var render = function() {
                   _c(
                     "v-uni-view",
                     { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
-                    [_vm._v("用户名")]
+                    [_vm._v(_vm._$g(6, "t0-0"))]
                   ),
                   _c(
                     "v-uni-view",
@@ -3498,73 +3498,123 @@ var render = function() {
       _c(
         "v-uni-view",
         { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
-        _vm._l(_vm._$g(12, "f"), function(item, $10, $20, $30) {
-          return _c(
+        [
+          _c(
             "v-uni-view",
-            {
-              key: item,
-              staticClass: _vm._$g("12-" + $30, "sc"),
-              attrs: { _i: "12-" + $30 }
-            },
+            { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
             [
               _c(
                 "v-uni-view",
-                {
-                  staticClass: _vm._$g("13-" + $30, "sc"),
-                  attrs: { _i: "13-" + $30 }
-                },
-                [_vm._v(_vm._$g("13-" + $30, "t0-0"))]
+                { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
+                [_vm._v(_vm._$g(13, "t0-0"))]
               ),
               _c(
                 "v-uni-view",
-                {
-                  staticClass: _vm._$g("14-" + $30, "sc"),
-                  attrs: { _i: "14-" + $30 }
-                },
-                [_vm._v(_vm._$g("14-" + $30, "t0-0"))]
+                { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
+                [_vm._v("余额")]
+              )
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
+            [
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
+                [_vm._v("0")]
+              ),
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
+                [_vm._v("佣金")]
+              )
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
+            [
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
+                [_vm._v(_vm._$g(19, "t0-0"))]
+              ),
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } },
+                [_vm._v("优惠券")]
+              )
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } },
+            [
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(22, "sc"), attrs: { _i: 22 } },
+                [_vm._v(_vm._$g(22, "t0-0"))]
+              ),
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(23, "sc"), attrs: { _i: 23 } },
+                [_vm._v("养生豆")]
               )
             ],
             1
           )
-        }),
+        ],
         1
       ),
       _c(
         "v-uni-view",
-        { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
-        [_c("v-uni-image", { attrs: { src: _vm._$g(16, "a-src"), _i: 16 } })],
+        { staticClass: _vm._$g(24, "sc"), attrs: { _i: 24 } },
+        [
+          _c("v-uni-image", {
+            attrs: { src: _vm._$g(25, "a-src"), _i: 25 },
+            on: {
+              click: function($event) {
+                return _vm.$handleViewEvent($event)
+              }
+            }
+          })
+        ],
         1
       ),
       _c(
         "v-uni-view",
-        { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
-        _vm._l(_vm._$g(18, "f"), function(list, $11, $21, $31) {
+        { staticClass: _vm._$g(26, "sc"), attrs: { _i: 26 } },
+        _vm._l(_vm._$g(27, "f"), function(list, $10, $20, $30) {
           return _c(
             "v-uni-view",
             {
               key: list,
-              staticClass: _vm._$g("18-" + $31, "sc"),
-              attrs: { _i: "18-" + $31 }
+              staticClass: _vm._$g("27-" + $30, "sc"),
+              attrs: { _i: "27-" + $30 }
             },
             [
               _c(
                 "v-uni-navigator",
                 {
-                  attrs: { url: _vm._$g("19-" + $31, "a-url"), _i: "19-" + $31 }
+                  attrs: { url: _vm._$g("28-" + $30, "a-url"), _i: "28-" + $30 }
                 },
                 [
                   _c("v-uni-view", {
-                    staticClass: _vm._$g("20-" + $31, "sc"),
-                    class: _vm._$g("20-" + $31, "c"),
-                    attrs: { _i: "20-" + $31 }
+                    staticClass: _vm._$g("29-" + $30, "sc"),
+                    class: _vm._$g("29-" + $30, "c"),
+                    attrs: { _i: "29-" + $30 }
                   }),
                   _c(
                     "v-uni-view",
                     {
-                      staticClass: _vm._$g("21-" + $31, "sc"),
-                      attrs: { _i: "21-" + $31 }
+                      staticClass: _vm._$g("30-" + $30, "sc"),
+                      attrs: { _i: "30-" + $30 }
                     },
-                    [_vm._v(_vm._$g("21-" + $31, "t0-0"))]
+                    [_vm._v(_vm._$g("30-" + $30, "t0-0"))]
                   )
                 ],
                 1
@@ -3575,11 +3625,11 @@ var render = function() {
         }),
         1
       ),
-      _c("technician", { attrs: { _i: 22 } }),
+      _c("technician", { attrs: { _i: 31 } }),
       _c(
         "v-uni-view",
-        { staticClass: _vm._$g(23, "sc"), attrs: { _i: 23 } },
-        [_c("v-uni-image", { attrs: { src: _vm._$g(24, "a-src"), _i: 24 } })],
+        { staticClass: _vm._$g(32, "sc"), attrs: { _i: 32 } },
+        [_c("v-uni-image", { attrs: { src: _vm._$g(33, "a-src"), _i: 33 } })],
         1
       )
     ],
