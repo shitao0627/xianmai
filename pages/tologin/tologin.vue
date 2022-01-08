@@ -28,7 +28,7 @@
 			}
 		},
 		methods: {
-			toindex() {
+			toindex(){
 				uni.switchTab({
 					url: "../index/index"
 				})
