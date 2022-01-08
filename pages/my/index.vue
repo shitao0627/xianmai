@@ -51,6 +51,12 @@
 	export default{
 		data() {
 			return {
+				userInfo:[],
+				unionId:'',
+				nickName:'',
+				avatarUrl:'',
+				openId:'',
+				user:[],
 				icon:[{
 					url:'Myevaluation/Myevaluation',
 					icon:'icon-wodedingdan',
@@ -121,7 +127,37 @@
 				uni.navigateTo({
 					url:"../set_up/set_up"
 				})
-			}
+			},
+			getweixinlogin() {
+				this.loading = true
+				let params = {
+					platform:2,
+					unionid:this.unionId,
+					nickname:this.nickName,
+					avatar:this.avatarUrl,
+					RegistrationID:this.openId,
+				}
+				params.sign = this.sign(params)
+				this.$api.weixinlogin(params).then((res) => {
+					this.loading = false;
+					// console.log('request success', res)
+			
+					this.user = res.data.Response
+					console.log('user', JSON.stringify(this.user))
+				}).catch((err) => {
+					this.loading = false;
+				})
+			},
+		},
+		
+		onLoad(options) {
+			this.unionId = options.unionId
+			this.nickname = options.nickname
+			this.avatarUrl = options.avatarUrl
+			this.openId = options.openId
+			console.log('userInfo',JSON.stringify(this.unionId))
+			console.log('nickname',JSON.stringify(this.nickname))
+			this.getweixinlogin()
 		}
 	}
 </script>

@@ -48,7 +48,7 @@
 				<text class="icon iconfont icon-zhi"></text>
 				<text class="ensure_card_text">下单立返3%</text>
 			</view>
-			<view class="ensure_card" @tap="csapi">
+			<view class="ensure_card" @tap="cslogin">
 				<text class="icon iconfont icon-tuihuobaozhang"></text>
 				<text class="ensure_card_text">退货顺丰包邮</text>
 			</view>
@@ -204,9 +204,9 @@
 					url: '/pages/classify/index?index='+(index+1)
 				})
 			},
-			csapi(){
+			cslogin(){
 				uni.navigateTo({
-					url:'../csapi/csapi'
+					url:'../cslogin/cslogin'
 				})
 			}
 		}
