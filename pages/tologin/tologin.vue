@@ -61,10 +61,10 @@
 								console.log('-------获取微信用户所有-----');
 								console.log(JSON.stringify(infoRes.userInfo));
 								that.userInfo = JSON.parse(JSON.stringify(infoRes.userInfo))
-								that.$store.commit("login",that.userInfo)
-								uni.reLaunch({
-									url:'../my/index?openId='+that.userInfo.openId+'&nickName='+that.userInfo.nickName+'&avatarUrl='+that.userInfo.avatarUrl+'&unionId='+that.userInfo.unionId
-								})
+								
+								// uni.reLaunch({
+								// 	url:'../my/index?openId='+that.userInfo.openId+'&nickName='+that.userInfo.nickName+'&avatarUrl='+that.userInfo.avatarUrl+'&unionId='+that.userInfo.unionId
+								// })
 								that.getweixinlogin()
 							}
 						});
@@ -82,19 +82,10 @@
 					RegistrationID:this.userInfo.openId,
 				}
 				params.sign = this.sign(params)
-				this.$api.weixinlogin(params).then((res) => {
-					this.loading = false;
-					// console.log('request success', res)
-			
-					this.user = res.data.Response
-					console.log('user', JSON.stringify(this.user))
-					
-					uni.reLaunch({
-						url:'../my/index?userInfo='+JSON.stringify(this.user)
-					});
-				}).catch((err) => {
-					this.loading = false;
-				})
+			   this.$store.dispatch("userlogin",params)
+				uni.reLaunch({
+					url:'../my/index'
+			 })
 			},
 		}
 	}

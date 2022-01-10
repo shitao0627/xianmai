@@ -142,6 +142,13 @@ export const weixinlogin = (data) => {
         data,
     })
 }
+export const OrderStatusNum = data=>{
+	return http.request({
+		url:'/UserBase/GetOrderCount',
+		method:'GET',
+		data
+	})
+}
 // 默认全部导出  import api from '@/common/vmeitime-http/'
 export default {
 	test,
@@ -157,6 +164,7 @@ export default {
 	appraiseNum,
 	appraiseList,
 	hoursTo,
-	weixinlogin
+	weixinlogin,
+	OrderStatusNum
 	
 }

@@ -53,7 +53,7 @@
 			uncollection
 		},
 		computed:{
-			lists(){
+			uerInfo(){
 				return this.$store.state.uerInfo
 			}
 		},

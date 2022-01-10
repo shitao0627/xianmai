@@ -6,10 +6,10 @@
 		<view class="my_header">
 			<view class="header_left">
 				<view class="header_img">
-					<image :src="userInfo.avatar"></image>
+					<image :src="uerInfo.avatar"></image>
 				</view>
 				<view class="header_nickname">
-					<view class="user_nickname">{{userInfo.nick_name}}</view>
+					<view class="user_nickname">{{uerInfo.nick_name}}</view>
 					<view class="user_bianji">
 						<text class="">编辑个人资料</text>
 						<text class="icon iconfont icon-bianji" style="font-size: .8rem;"></text>
@@ -21,7 +21,7 @@
 		<!--资产-->
 		<view class="my_balance">
 			<view class="my_balance_category">
-				<view class="my_balance_number">{{userInfo.amount}}</view>
+				<view class="my_balance_number">{{uerInfo.amount}}</view>
 				<view class="my_balance_name">余额</view>
 			</view>
 			<view class="my_balance_category">
@@ -29,11 +29,11 @@
 				<view class="my_balance_name">佣金</view>
 			</view>
 			<view class="my_balance_category">
-				<view class="my_balance_number">{{userInfo.count_wsy}}</view>
+				<view class="my_balance_number">{{uerInfo.count_wsy}}</view>
 				<view class="my_balance_name">优惠券</view>
 			</view>
 			<view class="my_balance_category">
-				<view class="my_balance_number">{{userInfo.keeping_bean}}</view>
+				<view class="my_balance_number">{{uerInfo.keeping_bean}}</view>
 				<view class="my_balance_name">养生豆</view>
 			</view>
 		</view>
@@ -158,56 +158,13 @@
 					url:"../set_up/set_up"
 				})
 			},
-			set(){
-				uni.navigateTo({
-					url:"../set_up/set_up"
-				})
 			},
-<<<<<<< HEAD
-			getweixinlogin() {
-				this.loading = true
-				let params = {
-					platform:2,
-					unionid:this.unionId,
-					nickname:this.nickName,
-					avatar:this.avatarUrl,
-					RegistrationID:this.openId,
+			computed:{
+				// 通过计算属性获取个人信息
+				uerInfo(){
+					return this.$store.state.uerInfo
 				}
-				params.sign = this.sign(params)
-				console.log(params)
-				this.$store.dispatch("userlogin",params)
-=======
-			// getweixinlogin() {
-			// 	this.loading = true
-			// 	let params = {
-			// 		platform:2,
-			// 		unionid:this.unionId,
-			// 		nickname:this.nickName,
-			// 		avatar:this.avatarUrl,
-			// 		RegistrationID:this.openId,
-			// 	}
-			// 	params.sign = this.sign(params)
->>>>>>> 3c7500a43857dd7fbdbf108e8126de8957a36a6b
-			// 	this.$api.weixinlogin(params).then((res) => {
-			// 		this.loading = false;
-			// 		// console.log('request success', res)
-			
-			// 		this.user = res.data.Response
-			// 		console.log('user', JSON.stringify(this.user))
-			// 	}).catch((err) => {
-			// 		this.loading = false;
-			// 	})
-<<<<<<< HEAD
-			},
-=======
-			// },
->>>>>>> 3c7500a43857dd7fbdbf108e8126de8957a36a6b
-		},
-		  
-		onLoad(options) {
-			this.userInfo = JSON.parse(options.userInfo) 
-			console.log('userInfo',this.userInfo)
-		}
+			}
 	}
 </script>
 

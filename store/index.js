@@ -14,9 +14,7 @@ const store = new Vuex.Store({
 	mutations: {
 		login(state, provider) { //改变登录状态  
 			state.hasLogin = true
-			state.uerInfo.nick_name = provider.s
-			state.uerInfo.user_id = provider.user_id
-			state.uerInfo.avatar = provider.avatar
+			state.uerInfo=provider
 			uni.setStorage({ //将用户信息保存在本地  
 				key: 'uerInfo',
 				data: provider
@@ -30,44 +28,15 @@ const store = new Vuex.Store({
 			})
 		}
 	},
-<<<<<<< HEAD
 	actions:{
+		// 存储用户信息
 		userlogin(context,provider){
-			console.log(provider)
 			axios("/Lib/GetAddWXUser","GET",provider).then(res=>{
 				console.log(res.Response)
 				context.commit("login",res.Response)
 			})
+			}
+			}
 			
-			// return  new Promise((resolv,rej)=>{
-			// uni.request({
-			// 	url:"https://api.xianmaiyangsheng.com:5443/api/Lib/GetAddWXUser",
-			// 	method:"GET",
-			// 	data:provider,
-			// 	success:res=>{
-			// 		console.log(res.data.Response)
-			// 		resolv(res.data.Response)
-			// 	},
-			// 	fail:res=>{
-			// 		rej(res.data.Response)
-			// 	}
-			// })	
-			// }).then(res=>{
-			// 	console.log(res)
-			// 	context.commit("login",res)
-			// })
-			
-			
-			
-			// this.weixinlogin(provider).then(res=>{
-			// 	console.log(res.data.Response)
-			// 	context.commit("login",res.data.Response)
-			// })
-		}
-=======
-	actions: {
-
->>>>>>> 3c7500a43857dd7fbdbf108e8126de8957a36a6b
-	}
 })
 export default store

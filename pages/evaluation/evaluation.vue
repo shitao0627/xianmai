@@ -1,4 +1,5 @@
 <template>
+	<!-- 商品详情页 -->
 	<view class="evaluation">
 		<!-- <view class="evaluation_header">
 			<view class="icon iconfont icon-fanhui" @tap="back"></view>
@@ -83,7 +84,6 @@
 		<!--底部-->
 		<view class="footer">
 			<view class="icons">
-		
 				<view class="box" @tap="toChat">
 					<view class="icon iconfont icon-kefu"></view>
 					<view class="text">客服</view>

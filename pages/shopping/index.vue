@@ -1,4 +1,5 @@
 <template>
+	<!-- 购物车 -->
 	<view>
 		<!-- <view v-if="showHeader" class="status" :style="{position:headerPosition,top:statusTop}"></view>
 		<view v-if="showHeader" class="header" :style="{position:headerPosition,top:headerTop}">

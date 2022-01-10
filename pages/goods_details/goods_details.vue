@@ -139,7 +139,7 @@
 					</view>
 					<view class="length">
 						<view class="text">购买数量</view>
-						<view class="price">&yen;{{checkedItem.price*goodsData.number}}</view>
+						<view class="price">&yen;{{number*price}}</view>
 						<view class="number">
 							<view class="sub" @tap.stop="sub">
 								<view class="">-</view>
@@ -235,8 +235,8 @@
 			</view>
 			<view class="row" style="margin: 0;border: none;">
 				<view class="text" style="width: 100rpx;">产品参数</view>
-				<!-- <view class="content"><view class="serviceitem" v-for="(item,index) in goodsData.service" :key="index">{{item.name}}</view></view> -->
-				<!-- <view class="" style="font-size: 26rpx;">{{productParameter.parameter_name}}&{{productParameter.parameter_value}}</view> -->
+				<!-- <view class="content"><view class="serviceitem" v-for="(item,index) in goodsData.service" :key="index">{{item.name}}</view></view>
+				<view class="" style="font-size: 26rpx;">{{productParameter.parameter_name}}&{{productParameter.parameter_value}}</view> -->
 				<view class="arrow">
 					<view class="icon iconfont icon-right"></view>
 				</view>
@@ -325,6 +325,8 @@
 				afterHeaderzIndex: 10, //层级
 				beforeHeaderOpacity: 1, //不透明度
 				afterHeaderOpacity: 0, //不透明度
+				number:0,
+				price:0,
 				//是否显示返回按钮
 				// #ifndef MP
 				showBack: true,
@@ -571,17 +573,19 @@
 			//选择规格
 			setSelectSpec(index) {
 				this.selectSpec = index;
+				this.number = this.checkedItem[index].number
+				this.price = this.checkedItem[index].price
 			},
 			//减少数量
 			sub() {
 				if (this.goodsData.number <= 1) {
 					return;
 				}
-				this.goodsData.number--;
+				this.number--;
 			},
 			//增加数量
 			add() {
-				this.goodsData.number++;
+				this.number++;
 			},
 			//跳转锚点
 			toAnchor(index) {
@@ -706,23 +710,28 @@
 				})
 			},
 			// 获取规格
-			getspecification() {
+		async getspecification() {
 				this.loading = true
 				let params = {
 					goodsId: this.recommend.goods_id
 				}
 				params.sign = this.sign(params)
-				this.$api.specification(params).then((res) => {
-					this.loading = false;
-					this.specification = res.data.Response
-					this.checkedItem = res.data.Response.spList[0]
-					console.log('specification', this.specification)
-					console.log('checkedItem', this.checkedItem)
-					// console.log('navigation', this.navigation)
-				}).catch((err) => {
-					this.loading = false;
-				})
-			},
+				let arr=await this.$api.specification(params)
+				 this.checkedItem=arr.data.Response.spList
+				console.log(this.checkedItem)
+				},
+				
+			// 	.then((res) => {
+			// 		this.loading = false;
+			// 		this.specification = res.data.Response
+			// 		this.checkedItem = res.data.Response.spList[0]
+			// 		console.log('specification', this.specification)
+			// 		console.log('checkedItem', this.checkedItem)
+			// 		console.log('navigation', this.navigation)
+			// 	}).catch((err) => {
+			// 		this.loading = false;
+			// 	})
+			// },
 			// 获取产品参数
 			getproductParameter() {
 				this.loading = true
