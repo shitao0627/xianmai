@@ -1,4 +1,5 @@
 <template>
+	<!-- 添加地址 -->
 	<view class="content b-t">
 		<view class="list b-b" v-for="(item, index) in addressList" :key="index" @click="checkAddress(item)">
 			<view class="wrapper">

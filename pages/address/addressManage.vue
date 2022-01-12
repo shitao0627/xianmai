@@ -1,4 +1,5 @@
 <template>
+	<!-- 添加收货地址 -->
 	<view class="content">
 		<view class="row b-b">
 			<text class="tit">收件人</text>

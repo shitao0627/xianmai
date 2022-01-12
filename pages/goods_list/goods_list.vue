@@ -1,4 +1,5 @@
 <template>
+	<!-- 商品列表 -->
 	<view class="container-wrapper">
 		<view class="goods-wrapper">
 			<scroll-view scroll-x scroll-with-animation class="navbar" :scroll-left="navScrollLeft"
@@ -400,7 +401,7 @@
 						width: 50%;
 						display: flex;
 						justify-content: center;
-						margin-top: 10px;
+						margin-top: 20rpx;
 					}
 
 					.load-more {

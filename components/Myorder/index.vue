@@ -17,9 +17,9 @@
 		</view>
 		</view>
 		 <view class="Myorder-header">
-		        <view class="Myorder-header-title" :class="item.id==active? 'active':''" v-for="item in list" :key="item.id" @click="changeClass(item.id)">
+		        <view class="Myorder-header-title" :class="item.id==active? 'active':''" v-for="item,index in list" :key="item.id" @click="changeClass(item.id)">
 				<view>{{item.title}}</view>
-				<view>(0)</view>
+				<view>{{number[index]}}</view>
 				</view>
 		  </view>
 		  <view >
@@ -66,6 +66,7 @@
 	export default{
 		data(){
 			return {
+				 number:[],
 				 active:1, //头部是否选中
 				 swipactive:0, //订单展示
 				 height:"",
@@ -107,9 +108,27 @@
 					delta:2
 				})
 			},
+			// 获取用户订单分类的数量
+			async GetOrderStatusNum(){
+				let option = {
+					"user_id":this.$store.state.uerInfo.user_id
+					}
+					option.sign = this.sign(option)	
+					console.log(option)
+				  let  arr = await this.$api.OrderStatusNum(option)
+						for(let a in arr.data.Response){
+							this.number.push(arr.data.Response[a])}
+						// 插入待换货的数量   在此处再次发送请求进行插入
+						this.number.splice(5,0,0)
+						console.log(this.number)
+			}
 		},
-		mounted(){
+		created(){
+			this.GetOrderStatusNum()
 		}
+		// mounted(){
+		// 	this.GetOrderStatusNum()
+		// }
 	}
 </script>
 

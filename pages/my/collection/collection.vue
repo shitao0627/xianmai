@@ -52,8 +52,16 @@
 		components:{
 			uncollection
 		},
+		computed:{
+			uerInfo(){
+				return this.$store.state.uerInfo
+			}
+		},
 		methods: {
 			
+		},
+		mounted(){
+			console.log(this.$store.state.uerInfo)
 		}
 	}
 </script>
