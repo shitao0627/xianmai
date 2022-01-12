@@ -12,9 +12,8 @@ const store = new Vuex.Store({
 	mutations: {
 		login(state, provider) { //改变登录状态  
 			state.hasLogin = true
-			state.uerInfo.nick_name = provider.s
 			state.uerInfo.user_id = provider.user_id
-			state.uerInfo.avatar = provider.avatar
+			state.uerInfo.nick_name = provider.nick_name
 			uni.setStorage({ //将用户信息保存在本地  
 				key: 'uerInfo',
 				data: provider

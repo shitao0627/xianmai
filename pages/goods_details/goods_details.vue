@@ -135,7 +135,7 @@
 					<view class="specification_information_title">选择规格：</view>
 					<view class="sp">
 						<view v-for="(item,index) in checkedItem" :class="[index==selectSpec?'on':'']"
-							@tap="setSelectSpec(index)" :key="index">{{item.specification}}</view>
+							@tap="setSelectSpec(index)" :key="index">{{item.value}}</view>
 					</view>
 					<view class="length">
 						<view class="text">购买数量</view>
@@ -405,6 +405,7 @@
 				specification:[],//规格
 				checkedItem:[],//规格
 				productParameter:[],//产品参数
+				goods_id:''
 			};
 		},
 		onLoad(option) {
@@ -415,7 +416,9 @@
 			//option为object类型，会序列化上个页面传递的参数
 			
 			this.recommend =  JSON.parse(JSON.stringify(option))
-			console.log('recommend'+this.recommend); //打印出上个页面传递的参数。
+			console.log('recommend'+JSON.stringify(this.recommend)); //打印出上个页面传递的参数。
+			this.goods_id = option.goods_id
+			console.log('good_id',this.goods_id)
 			this.getgoodsdetails()
 			this.getrecommend()
 			this.getspecification()
@@ -718,7 +721,6 @@
 					this.checkedItem = res.data.Response.spList[0]
 					console.log('specification', this.specification)
 					console.log('checkedItem', this.checkedItem)
-					// console.log('navigation', this.navigation)
 				}).catch((err) => {
 					this.loading = false;
 				})

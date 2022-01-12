@@ -61,6 +61,7 @@
 
 <script>
 	import appShare, { closeShare } from "@/utils/share.js"
+
 	export default{
 		data() {
 			return {
@@ -110,24 +111,7 @@
 					icon:'icon-24gl-phoneLoudspeaker',
 					name:'投诉电话',
 					src:''
-				}],
-				balance:[{
-					number:'0.00',
-					name:'购物卡余额',
-					url:''
-				},{
-					number:'6350.00',
-					name:'我的佣金',
-					url:''
-				},{
-					number:'5',
-					name:'我的优惠券',
-					url:''
-				},{
-					number:'50.00',
-					name:'我的金币',
-					url:''
-				},]
+				}]
 			}
 		},
 		methods:{

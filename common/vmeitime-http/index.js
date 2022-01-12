@@ -142,6 +142,7 @@ export const weixinlogin = (data) => {
         data,
     })
 }
+
 // 默认全部导出  import api from '@/common/vmeitime-http/'
 export default {
 	test,
