@@ -139,7 +139,7 @@
 					</view>
 					<view class="length">
 						<view class="text">购买数量</view>
-						<view class="price">&yen;{{number*price}}</view>
+						<view class="price">&yen;{{checkedItem.price*goodsData.number}}</view>
 						<view class="number">
 							<view class="sub" @tap.stop="sub">
 								<view class="">-</view>
@@ -235,8 +235,8 @@
 			</view>
 			<view class="row" style="margin: 0;border: none;">
 				<view class="text" style="width: 100rpx;">产品参数</view>
-				<!-- <view class="content"><view class="serviceitem" v-for="(item,index) in goodsData.service" :key="index">{{item.name}}</view></view>
-				<view class="" style="font-size: 26rpx;">{{productParameter.parameter_name}}&{{productParameter.parameter_value}}</view> -->
+				<!-- <view class="content"><view class="serviceitem" v-for="(item,index) in goodsData.service" :key="index">{{item.name}}</view></view> -->
+				<!-- <view class="" style="font-size: 26rpx;">{{productParameter.parameter_name}}&{{productParameter.parameter_value}}</view> -->
 				<view class="arrow">
 					<view class="icon iconfont icon-right"></view>
 				</view>
@@ -325,8 +325,6 @@
 				afterHeaderzIndex: 10, //层级
 				beforeHeaderOpacity: 1, //不透明度
 				afterHeaderOpacity: 0, //不透明度
-				number:0,
-				price:0,
 				//是否显示返回按钮
 				// #ifndef MP
 				showBack: true,
@@ -407,7 +405,6 @@
 				specification:[],//规格
 				checkedItem:[],//规格
 				productParameter:[],//产品参数
-				goods_id:''
 			};
 		},
 		onLoad(option) {
@@ -418,9 +415,7 @@
 			//option为object类型，会序列化上个页面传递的参数
 			
 			this.recommend =  JSON.parse(JSON.stringify(option))
-			console.log('recommend'+JSON.stringify(this.recommend)); //打印出上个页面传递的参数。
-			this.goods_id = option.goods_id
-			console.log('good_id',this.goods_id)
+			console.log('recommend'+this.recommend); //打印出上个页面传递的参数。
 			this.getgoodsdetails()
 			this.getrecommend()
 			this.getspecification()
@@ -576,19 +571,17 @@
 			//选择规格
 			setSelectSpec(index) {
 				this.selectSpec = index;
-				this.number = this.checkedItem[index].number
-				this.price = this.checkedItem[index].price
 			},
 			//减少数量
 			sub() {
 				if (this.goodsData.number <= 1) {
 					return;
 				}
-				this.number--;
+				this.goodsData.number--;
 			},
 			//增加数量
 			add() {
-				this.number++;
+				this.goodsData.number++;
 			},
 			//跳转锚点
 			toAnchor(index) {
@@ -713,7 +706,7 @@
 				})
 			},
 			// 获取规格
-		async getspecification() {
+			getspecification() {
 				this.loading = true
 				let params = {
 					goodsId: this.recommend.goods_id
@@ -725,15 +718,11 @@
 					this.checkedItem = res.data.Response.spList[0]
 					console.log('specification', this.specification)
 					console.log('checkedItem', this.checkedItem)
+					// console.log('navigation', this.navigation)
 				}).catch((err) => {
 					this.loading = false;
 				})
 			},
-				// let arr=await this.$api.specification(params)
-				//  this.checkedItem=arr.data.Response.spList
-				// console.log(this.checkedItem)
-				// },
-
 			// 获取产品参数
 			getproductParameter() {
 				this.loading = true

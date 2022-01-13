@@ -242,6 +242,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/goods_details2/goods_details2",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		// "navigationBarTextStyle": "black",
