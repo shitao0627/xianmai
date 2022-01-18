@@ -150,6 +150,88 @@ export const OrderStatusNum = data=>{
 		data
 	})
 }
+//微信支付
+export const WXPayAPP = data=>{
+	return http.request({
+		url:'/Lib/GetWXPayAPP',
+		method:'GET',
+		data
+	})
+}
+//获取微信支付信息
+export const PayInfo = data=>{
+	return http.request({
+		url:'/Lib/GetPayInfo',
+		method:'GET',
+		data
+	})
+}
+//获取订单列表
+export const OrderList = data=>{
+	return http.request({
+		url:'/UserBase/GetOrderList',
+		method:'GET',
+		data
+	})
+}
+//(24小时到)提交订单
+export const PostTwoFourSubmitOrder = data=>{
+	return http.request({
+		url:'/HomePage/PostTwoFourSubmitOrder',
+		method:'POST',
+		data
+	})
+}
+//app微信支付
+
+
+/*****收获地址*****/
+
+//编辑保存收获地址
+export const SaveUserAddress = data=>{
+	return http.request({
+		url:'/ShippingAddress/GetSaveUserAddress',
+		method:'GET',
+		data
+	})
+}
+//新增收货地址
+export const AddUserAddress = data=>{
+	return http.request({
+		url:'/ShippingAddress/GetAddUserAddress',
+		method:'GET',
+		data
+	})
+}
+// 获取收获地址
+export const UserAddress = data=>{
+	return http.request({
+		url:'/ShippingAddress/GetUserAddress',
+		method:'GET',
+		data
+	})
+}
+// 删除收获地址
+export const UserAddressDel = data=>{
+	return http.request({
+		url:'/ShippingAddress/GetUserAddressDel',
+		method:'GET',
+		data
+	})
+}
+// 设置默认地址
+export const EditDefalut = data=>{
+	return http.request({
+		url:'/ShippingAddress/GetEditDefalut',
+		method:'GET',
+		data
+	})
+}
+
+
+
+
+
 
 export default {
 	test,
@@ -166,6 +248,14 @@ export default {
 	appraiseList,
 	hoursTo,
 	weixinlogin,
-	OrderStatusNum
-	
+	OrderStatusNum,
+	WXPayAPP,
+	PayInfo,
+	OrderList,
+	PostTwoFourSubmitOrder,
+	SaveUserAddress,
+	UserAddress,
+	AddUserAddress,
+	UserAddressDel,
+	EditDefalut
 }

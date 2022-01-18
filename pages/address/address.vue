@@ -1,15 +1,15 @@
 <template>
 	<!-- 添加地址 -->
 	<view class="content b-t">
-		<view class="list b-b" v-for="(item, index) in addressList" :key="index" @click="checkAddress(item)">
+		<view class="list b-b" v-for="(item, index) in useraddress" :key="index" @click="checkAddress(item)">
 			<view class="wrapper">
 				<view class="u-box">
-					<text class="name">{{item.name}}</text>
-					<text class="mobile">{{item.mobile}}</text>
+					<text class="name">{{item.recipient}}</text>
+					<text class="mobile">{{item.phone}}</text>
 				</view>
 				<view class="address-box">
 					<!-- <text v-if="item.default" class="tag">默认</text> -->
-					<text class="address">{{item.addressName}} {{item.area}}</text>
+					<text class="address">{{item.shipping_address}} {{item.shipping_address_details}}</text>
 				</view>
 				<view class="set_up">
 					<view class="setup_left">
@@ -18,7 +18,7 @@
 					</view>
 					<view class="setup_right">
 						<view @tap.stop="addAddress('edit', item)">编辑</view>
-						<view>删除</view>
+						<view @tap.stop="deleteAddress(index)">删除</view>
 					</view>
 				</view>
 			</view>
@@ -35,32 +35,80 @@
 			return {
 				intype:0,
 				source: 0,
-				addressList: [
-					{
-						name: '张三',
-						mobile: '18666666666',
-						addressName: '贵族皇仕牛排(东城店)',
-						address: '北京市东城区',
-						area: 'B区',
-						default: true
-					},{
-						name: '李四',
-						mobile: '18667766666',
-						addressName: '龙回1区12号楼',
-						address: '山东省济南市历城区',
-						area: '西单元302',
-						default: false,
-					}
-				]
+				UserAddressDel:[],//删除收获地址
+				useraddress:[],//获取收获地址
+				useraddressid:'',
+				EditDefalut:'',
+				userid:'',
 			}
 		},
 		onLoad(option){
 			console.log(option.source);
 			this.source = option.source;
+			this.GetUserAddress()
 		},
 		methods: {
+			GetUserAddress(){
+				let params = {
+					user_id: '1333624'
+				}
+				params.sign = this.sign(params)
+				this.$api.UserAddress(params).then((res) => {
+					this.loading = false;
+					this.useraddress = res.data.Response
+					this.useraddressid = res.data.Response[0].id
+					this.userid = res.data.Response[0].userid
+					console.log('useraddress', this.useraddress)
+					console.log('useraddressid',JSON.stringify(this.useraddressid))
+					// console.log('navigation', this.navigation)
+				}).catch((err) => {
+					this.loading = false;
+				})
+			},
+			deleteAddress(index){
+				let that = this
+				uni.showModal({
+					content: '确认删除地址吗？',
+					success: function (res) {
+						if (res.confirm) {
+							let params = {
+								address_id: that.useraddressid
+							}
+							params.sign = that.sign(params)
+							that.$api.UserAddressDel(params).then((res) => {
+								that.loading = false;
+								that.UserAddressDel = res
+								console.log('UserAddressDel', that.UserAddressDel)
+								// console.log('navigation', this.navigation)
+								that.useraddress.splice(index,1);
+							}).catch((err) => {
+								that.loading = false;
+							})
+							console.log('用户点击确定');
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+							return
+						}
+					}
+				});
+				
+			},
+			//设置默认地址
 			ontype(index) {
 				this.intype = index;
+				// let params = {
+				// 	address_id: this.useraddressid,
+				// 	userid: this.userid
+				// }
+				// params.sign = this.sign(params)
+				// this.$api.EditDefalut(params).then((res) => {
+				// 	this.loading = false;
+				// 	this.EditDefalut = res
+				// 	console.log('EditDefalut', this.EditDefalut)
+				// 	// console.log('navigation', this.navigation)
+				// }).catch((err) => {
+				// 	this.loading = false;
+				// })
 			},
 			//选择地址
 			checkAddress(item){

@@ -209,7 +209,7 @@
 				</view>
 				<!--去付款-->
 				<view class="topay"  @click="toggleMaskpay">
-					<view class="topay_button" v-if="payType==1">微信支付{{this.goodsPrice}}元</view>
+					<view class="topay_button" v-if="payType==1" @tap="topay">微信支付{{this.goodsPrice}}元</view>
 					<view class="topay_button" v-if="payType==2" @tap="topaid">好友代付{{this.goodsPrice}}元</view>
 					<view class="topay_button" v-if="payType==3">支付宝支付{{this.goodsPrice}}元</view>
 					<view class="topay_button" v-if="payType==4" @tap="show = true">余额支付{{this.goodsPrice}}元</view>
@@ -229,6 +229,7 @@
 		},
 		data() {
 			return {
+				PostTwoFourSubmitOrder:[],
 				show: false,
 				buylist:[],		//订单列表
 				coupons:[],
@@ -236,6 +237,12 @@
 				maskpay:0, //支付面板
 				desc: '', //备注
 				payType: 1, //1微信 2支付宝
+				ceshi:[{
+				  shopping_cart_id: 0,
+				  goods_id: 82606,
+				  specification_id: 161030,
+				  number: 100
+				}],
 				couponList: [
 					{
 						title: '新用户专享优惠券',
@@ -299,6 +306,33 @@
 			//console.log(data);
 		},
 		methods: {
+			topay(){
+				// 提交订单获取订单号
+				this.loading = true
+				let urlParams = {
+					user_id: 1333624,
+					addres_id: 1111386,
+					invoice_type: '电子',
+					invoice_code: '个人',
+					invoice_name: "",
+					invoice_tax_number: "",
+					buyer_msg: "",
+					coupon_id: 0,
+					keeping_bean: 0,
+					is_huodao: 0
+				}
+				urlParams.sign = this.sign(urlParams)
+				let bodyParams = this.ceshi
+				this.$api.PostTwoFourSubmitOrder('user_id='+urlParams.user_id+'&addres_id='+urlParams.addres_id+'&invoice_type='+urlParams.invoice_type+'&invoice_code='+urlParams.invoice_code+'&invoice_name='+urlParams.invoice_name+'&invoice_tax_number='+urlParams.invoice_tax_number+'&buyer_msg='+urlParams.buyer_msg+'&coupon_id='+urlParams.coupon_id+'&keeping_bean='+urlParams.keeping_bean+'&is_huodao='+urlParams.is_huodao+'&sign='+urlParams.sign,
+				{ body: [{shopping_cart_id: 0,goods_id: 82606,specification_id: 161030,number: 100}] }).then((res) => {
+					this.loading = false;
+					this.PostTwoFourSubmitOrder = res
+					console.log('PostTwoFourSubmitOrder', this.PostTwoFourSubmitOrder)
+				}).catch((err) => {
+					this.loading = false;
+				})
+
+			},
 			clearOrder(){
 				uni.removeStorage({
 					key: 'buylist',

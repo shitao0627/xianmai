@@ -35,7 +35,6 @@
 		<!-- 底部菜单 -->
 		<view class="footer">
 			<view class="icons">
-
 				<view class="box" @tap="toChat">
 					<view class="icon iconfont icon-kefu"></view>
 					<view class="text">客服</view>
